@@ -1,0 +1,18 @@
+\chapter*{Приложение А}
+\label{appendix:a}
+\addcontentsline{toc}{chapter}{Приложение А}
+
+% --- Сохраняем оригинальное форматирование ---
+\makeatletter
+\let\oldthefigure\thefigure
+\renewcommand{\thefigure}{А.\arabic{figure}}
+\setcounter{figure}{0}
+\makeatother
+TBD
+
+% --- Восстанавливаем старое форматирование, если нужно ---
+\makeatletter
+\let\thefigure\oldthefigure
+\makeatother
+
+\endinput
