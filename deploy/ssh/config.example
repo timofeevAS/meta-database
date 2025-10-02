@@ -1,0 +1,7 @@
+Host vps-all
+    HostName 111.11.1.111
+    User jam
+    Port 2222
+    IdentityFile ~/.ssh/hostvds
+    LocalForward 55432 127.0.0.1:5432   # pg-app
+    LocalForward 55433 127.0.0.1:5433   # metadata-db
