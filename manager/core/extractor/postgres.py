@@ -159,4 +159,57 @@ class PostgresExtractor(BaseExtractor):
         Return foreign keys, preserving column order. Include referenced schema/table
         and a column mapping (src->tgt).
         """
-        raise NotImplementedError()
+        sql = """--sql
+            SELECT
+                con.conname AS constraint_name,
+                src_ns.nspname AS src_schema,
+                src_rel.relname AS src_table,
+                tgt_ns.nspname AS tgt_schema,
+                tgt_rel.relname AS tgt_table,
+                src_att.attname AS src_col,
+                tgt_att.attname AS tgt_col,
+                ord.n AS position
+            FROM pg_constraint con
+            JOIN pg_class src_rel ON con.conrelid = src_rel.oid
+            JOIN pg_namespace src_ns ON src_rel.relnamespace = src_ns.oid
+            JOIN pg_class tgt_rel ON con.confrelid = tgt_rel.oid
+            JOIN pg_namespace tgt_ns ON tgt_rel.relnamespace = tgt_ns.oid
+            -- align i-th key of conkey with i-th key of confkey
+            JOIN LATERAL generate_subscripts(con.conkey, 1) AS ord(n) ON TRUE
+            LEFT JOIN pg_attribute src_att
+                ON src_att.attrelid = src_rel.oid
+            AND src_att.attnum   = con.conkey[ord.n]
+            LEFT JOIN pg_attribute tgt_att
+                ON tgt_att.attrelid = tgt_rel.oid
+            AND tgt_att.attnum   = con.confkey[ord.n]
+            WHERE con.contype = 'f'
+            AND src_ns.nspname = %s
+            AND src_rel.relname = %s
+            ORDER BY con.conname, ord.n;
+        """
+
+        with self.conn.cursor() as cur:
+            cur.execute(sql, (table_schema, table_name))
+            rows = cur.fetchall()
+
+        # rows cols order as in SELECT
+        # (constraint_name, src_schema, src_table, tgt_schema, tgt_table, src_col, tgt_col, position)
+        fks: dict[str, ForeignKeyInfo] = {}
+        for constraint_name, _src_schema, _src_table, tgt_schema, tgt_table, src_col, tgt_col, _pos in rows:
+            if constraint_name not in fks:
+                fks[constraint_name] = {
+                    "constraint_name": constraint_name,
+                    "columns": [],
+                    "referenced_schema": tgt_schema,
+                    "referenced_table": tgt_table,
+                    "referenced_columns": [],
+                    "column_pairs": [],
+                }
+            fks[constraint_name]["columns"].append(src_col)
+            fks[constraint_name]["referenced_columns"].append(tgt_col)
+
+        # fill pairs preserving order
+        for fk in fks.values():
+            fk["column_pairs"] = list(zip(fk["columns"], fk["referenced_columns"]))
+
+        return list(fks.values())

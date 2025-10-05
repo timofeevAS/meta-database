@@ -95,6 +95,19 @@ class TestPostgresExtractor(unittest.TestCase):
         self.assertEqual([{'constraint_name': 'tmp_products_pkey', 'columns': ['id'], 'ordinal_positions': [1]}], 
                     self.extractor.list_primary_keys("public", "tmp_products"))
         
+        # Foreign (References keys)
+        self.assertEqual([], self.extractor.list_foreign_keys("public", "tmp_users"))
+
+        self.assertEqual([{'constraint_name': 'tmp_orders_user_id_fkey', 
+                           'columns': ['user_id'], 
+                           'referenced_schema': 'public', 
+                           'referenced_table': 'tmp_users', 
+                           'referenced_columns': ['id'], 
+                           'column_pairs': [('user_id', 'id')]}],
+                          self.extractor.list_foreign_keys("public", "tmp_orders"))
+        
+        self.assertEqual([], self.extractor.list_foreign_keys("public", "tmp_products"))
+        
         
 
     def test_table_schemas_are_valid(self):
