@@ -44,7 +44,7 @@ class PostgresExtractor(BaseExtractor):
                 - table_type: BASE TABLE
         """
         self.connect()
-        query = """
+        query = """--sql
         SELECT
             table_schema,
             table_name,
