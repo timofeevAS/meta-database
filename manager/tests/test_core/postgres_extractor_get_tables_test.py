@@ -1,0 +1,83 @@
+import unittest
+import psycopg2
+from manager.core.extractor.postgres import PostgresExtractor
+from manager.tests.conf.configure import config
+
+
+class PostgresExtractorTest(unittest.TestCase):
+    """Unit tests for PostgresExtractor using unittest framework."""
+
+    @classmethod
+    def setUpClass(cls):
+        """Create PostgresExtractor once for all tests."""
+        conn_params = dict(
+            host=config.host,
+            port=config.port,
+            user=config.user,
+            password=config.password,
+            dbname=config.dbname,
+        )
+        cls.conn_params = conn_params
+        cls.extractor = PostgresExtractor(conn_params)
+
+    @classmethod
+    def tearDownClass(cls):
+        """Close extractor if it exposes close()."""
+        close = getattr(cls.extractor, "close", None)
+        if callable(close):
+            close()
+
+    def _exec_sql(self, sql):
+        """Run raw SQL in a separate psycopg2 connection."""
+        with psycopg2.connect(**self.conn_params) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql)
+            conn.commit()
+
+    def setUp(self):
+        """Prepare clean test tables."""
+        self._exec_sql("""
+            DROP TABLE IF EXISTS tmp_users, tmp_orders, tmp_products CASCADE;
+            CREATE TABLE tmp_users (
+                id SERIAL PRIMARY KEY,
+                name TEXT NOT NULL
+            );
+            CREATE TABLE tmp_orders (
+                id SERIAL PRIMARY KEY,
+                user_id INT REFERENCES tmp_users(id),
+                amount DECIMAL NOT NULL
+            );
+            CREATE TABLE tmp_products (
+                id SERIAL PRIMARY KEY,
+                title TEXT
+            );
+        """)
+
+    def tearDown(self):
+        """Clean up after each test."""
+        self._exec_sql("""
+            DROP TABLE IF EXISTS tmp_users, tmp_orders, tmp_products CASCADE;
+        """)
+
+    def test_list_tables_includes_temporary(self):
+        """Check that list_tables() finds tables created by this test."""
+        tables = self.extractor.list_tables()
+        table_names = {t["table_name"] for t in tables}
+
+        expected = {"tmp_users", "tmp_orders", "tmp_products"}
+        missing = expected - table_names
+
+        self.assertFalse(missing, f"Missing tables in list_tables(): {missing}")
+        # shape check
+        self.assertTrue(all({"schema", "table_name", "table_type"} <= set(t.keys()) for t in tables))
+
+    def test_table_schemas_are_valid(self):
+        """Check that all returned schemas are non-empty and not system schemas."""
+        tables = self.extractor.list_tables()
+        for t in tables:
+            self.assertIsInstance(t["schema"], str)
+            self.assertNotIn(t["schema"], ("pg_catalog", "information_schema"))
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
