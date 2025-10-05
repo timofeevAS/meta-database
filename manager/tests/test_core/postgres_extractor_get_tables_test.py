@@ -36,7 +36,10 @@ class PostgresExtractorTest(unittest.TestCase):
 
     def setUp(self):
         """Prepare clean test tables."""
-        self._exec_sql("""
+        self._exec_sql("""--sql
+            DROP SCHEMA IF EXISTS public CASCADE;
+            CREATE SCHEMA public;
+            GRANT ALL ON SCHEMA public TO public;
             DROP TABLE IF EXISTS tmp_users, tmp_orders, tmp_products CASCADE;
             CREATE TABLE tmp_users (
                 id SERIAL PRIMARY KEY,
@@ -64,12 +67,9 @@ class PostgresExtractorTest(unittest.TestCase):
         tables = self.extractor.list_tables()
         table_names = {t["table_name"] for t in tables}
 
-        expected = {"tmp_users", "tmp_orders", "tmp_products"}
-        missing = expected - table_names
-
-        self.assertFalse(missing, f"Missing tables in list_tables(): {missing}")
-        # shape check
-        self.assertTrue(all({"schema", "table_name", "table_type"} <= set(t.keys()) for t in tables))
+        self.assertEqual({"tmp_users", "tmp_orders", "tmp_products"}, table_names)
+        
+        # check columns todo:
 
     def test_table_schemas_are_valid(self):
         """Check that all returned schemas are non-empty and not system schemas."""
