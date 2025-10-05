@@ -59,6 +59,7 @@ class PostgresExtractor(BaseExtractor):
             {'schema': r[0], 'table_name': r[1], 'table_type': r[2]}
             for r in rows
         ]
+    
     def list_columns(
         self,
         table_schema: str,
