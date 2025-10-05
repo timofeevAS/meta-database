@@ -115,7 +115,40 @@ class PostgresExtractor(BaseExtractor):
         Return primary key definitions. For most engines it's 0 or 1 rows per table,
         but keep List for flexibility and future extension.
         """
-        raise NotImplementedError()
+        query = """--sql
+            SELECT
+                tc.constraint_name,
+                kcu.column_name,
+                kcu.ordinal_position
+            FROM information_schema.table_constraints AS tc
+            JOIN information_schema.key_column_usage AS kcu
+                ON tc.constraint_name = kcu.constraint_name
+                AND tc.table_schema = kcu.table_schema
+            WHERE tc.constraint_type = 'PRIMARY KEY'
+            AND tc.table_schema = %s
+            AND tc.table_name = %s
+            ORDER BY kcu.ordinal_position;
+        """
+
+        with self.conn.cursor() as cur:
+            cur.execute(query, (table_schema, table_name))
+            rows = cur.fetchall()
+
+        if not rows:
+            return []
+
+        pk_map = {}
+        for constraint_name, column_name, ordinal_position in rows:
+            if constraint_name not in pk_map:
+                pk_map[constraint_name] = {
+                    "constraint_name": constraint_name,
+                    "columns": [],
+                    "ordinal_positions": [],
+                }
+            pk_map[constraint_name]["columns"].append(column_name)
+            pk_map[constraint_name]["ordinal_positions"].append(ordinal_position)
+
+        return list(pk_map.values())
 
     def list_foreign_keys(
         self,

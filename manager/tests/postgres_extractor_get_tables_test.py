@@ -84,6 +84,18 @@ class TestPostgresExtractor(unittest.TestCase):
             {'name': 'id', 'data_type': 'integer', 'is_nullable': False, 'ordinal_position': 1, 'default': "nextval('tmp_products_id_seq'::regclass)"},
             {'name': 'title', 'data_type': 'text', 'is_nullable': True, 'ordinal_position': 2, 'default': None}],
             self.extractor.list_columns("public", "tmp_products"))
+        
+        # Primary keys
+        self.assertEqual([{'constraint_name': 'tmp_users_pkey', 'columns': ['id'], 'ordinal_positions': [1]}], 
+                         self.extractor.list_primary_keys("public", "tmp_users"))
+        
+        self.assertEqual([{'constraint_name': 'tmp_orders_pkey', 'columns': ['id'], 'ordinal_positions': [1]}], 
+                         self.extractor.list_primary_keys("public", "tmp_orders"))
+        
+        self.assertEqual([{'constraint_name': 'tmp_products_pkey', 'columns': ['id'], 'ordinal_positions': [1]}], 
+                    self.extractor.list_primary_keys("public", "tmp_products"))
+        
+        
 
     def test_table_schemas_are_valid(self):
         """Check that all returned schemas are non-empty and not system schemas."""
