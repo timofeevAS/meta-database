@@ -72,7 +72,39 @@ class PostgresExtractor(BaseExtractor):
         """
         Return columns with types and nullability. Include ordinal_position for stable ordering.
         """
-        raise NotImplementedError()
+        self.connect()
+
+        query = """--sql
+            SELECT
+                a.attnum AS ordinal_position,
+                a.attname AS column_name,
+                pg_catalog.format_type(a.atttypid, a.atttypmod) AS formatted_type,
+                NOT a.attnotnull AS is_nullable,
+                pg_catalog.pg_get_expr(ad.adbin, ad.adrelid) AS column_default
+            FROM pg_catalog.pg_attribute a
+            JOIN pg_catalog.pg_class c ON c.oid = a.attrelid
+            JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            LEFT JOIN pg_catalog.pg_attrdef ad
+                ON ad.adrelid = a.attrelid AND ad.adnum = a.attnum
+            WHERE n.nspname = %s
+            AND c.relname = %s
+            AND a.attnum > 0
+            AND NOT a.attisdropped
+            ORDER BY a.attnum;
+        """
+        self.cursor.execute(query, (table_schema, table_name))
+        rows = self.cursor.fetchall()
+
+        return [
+            ColumnInfo(
+                name=r[1],
+                data_type=r[2],
+                is_nullable=bool(r[3]),
+                ordinal_position=int(r[0]),
+                default=r[4],
+            )
+            for r in rows
+        ]
 
     def list_primary_keys(
         self,

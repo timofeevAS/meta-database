@@ -1,10 +1,10 @@
 import unittest
 import psycopg2
 from manager.core.extractor.postgres import PostgresExtractor
-from manager.tests.conf.configure import config
+from tests.conf.configure import config
 
 
-class PostgresExtractorTest(unittest.TestCase):
+class TestPostgresExtractor(unittest.TestCase):
     """Unit tests for PostgresExtractor using unittest framework."""
 
     @classmethod
@@ -69,7 +69,21 @@ class PostgresExtractorTest(unittest.TestCase):
 
         self.assertEqual({"tmp_users", "tmp_orders", "tmp_products"}, table_names)
         
-        # check columns todo:
+        self.assertEqual([
+            {'name': 'id', 'data_type': 'integer', 'is_nullable': False, 'ordinal_position': 1, 'default': "nextval('tmp_users_id_seq'::regclass)"},
+            {'name': 'name', 'data_type': 'text', 'is_nullable': False, 'ordinal_position': 2, 'default': None}], 
+            self.extractor.list_columns("public", "tmp_users"))
+        
+        self.assertEqual([
+            {'name': 'id', 'data_type': 'integer', 'is_nullable': False, 'ordinal_position': 1, 'default': "nextval('tmp_orders_id_seq'::regclass)"},
+            {'name': 'user_id', 'data_type': 'integer', 'is_nullable': True, 'ordinal_position': 2, 'default': None},
+            {'name': 'amount', 'data_type': 'numeric', 'is_nullable': False, 'ordinal_position': 3, 'default': None}], 
+            self.extractor.list_columns("public", "tmp_orders"))
+        
+        self.assertEqual([
+            {'name': 'id', 'data_type': 'integer', 'is_nullable': False, 'ordinal_position': 1, 'default': "nextval('tmp_products_id_seq'::regclass)"},
+            {'name': 'title', 'data_type': 'text', 'is_nullable': True, 'ordinal_position': 2, 'default': None}],
+            self.extractor.list_columns("public", "tmp_products"))
 
     def test_table_schemas_are_valid(self):
         """Check that all returned schemas are non-empty and not system schemas."""

@@ -12,14 +12,11 @@ class TableInfo(TypedDict):
 
 
 class ColumnInfo(TypedDict, total=False):
-    column_name: str
-    data_type: str           # normalized type if possible
+    name: str
+    data_type: str                # "numeric(10,2)" / "timestamp with time zone"
     is_nullable: bool
     ordinal_position: int
-    character_maximum_length: Optional[int]
-    numeric_precision: Optional[int]
-    numeric_scale: Optional[int]
-    column_default: Optional[str]
+    default: Optional[str] = None
 
 
 class PrimaryKeyInfo(TypedDict):
