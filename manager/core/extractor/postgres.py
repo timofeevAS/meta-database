@@ -44,17 +44,21 @@ class PostgresExtractor(BaseExtractor):
                 - table_type: BASE TABLE
         """
         self.connect()
+
         query = """--sql
-        SELECT
-            table_schema,
-            table_name,
-            table_type
-        FROM information_schema.tables
-        WHERE table_schema NOT IN ('pg_catalog', 'information_schema')
-        ORDER BY table_schema, table_name;
+            SELECT
+                table_schema,
+                table_name,
+                table_type
+            FROM information_schema.tables
+            WHERE table_schema NOT IN ('pg_catalog', 'information_schema')
+            ORDER BY table_schema, table_name;
         """
+
         self.cursor.execute(query)
+        
         rows = self.cursor.fetchall()
+        
         return [
             {'schema': r[0], 'table_name': r[1], 'table_type': r[2]}
             for r in rows
