@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     env_file: .env
     ports:
-      - "127.0.0.1:${VPS_PORT:-5433}:5432"
+      - "127.0.0.1:${VPS_PORT:-5432}:5432"
     volumes:
       - metadata_db_data:/var/lib/postgresql/data
     healthcheck:
