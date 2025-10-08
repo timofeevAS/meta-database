@@ -2,3 +2,10 @@
 .pytest_cache
 /__pychache__
 *.pyc
+
+# Frontend
+frontend/node_modules
+frontend/vite.config.js.timestamp-*
+frontend/vite.config.ts.timestamp-*
+frontend/.vite/
+manager/static

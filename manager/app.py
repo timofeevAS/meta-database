@@ -2,12 +2,20 @@ from fastapi import FastAPI
 from manager.config import settings
 
 from manager.api.routers import health
+from manager.api.routers import metadata
 
-def create_app() -> FastAPI:
+from manager.services.metadata_db.pool import init_pool
+
+def create_app(test_dsn: str | None = None) -> FastAPI:
     app = FastAPI(title="meta-database manager", debug=settings.DEBUG)
+    
+    # TODO: Initialize pool with db connection. Is it correct?
+    if test_dsn is None:
+        init_pool(settings.METADB_DSN)
+    else:
+        init_pool(test_dsn)
 
     app.include_router(health.router, tags=["health"])
+    app.include_router(metadata.router, tags=["metadata"], prefix="/api")
 
     return app
-
-app = create_app()

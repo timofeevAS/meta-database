@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     DEBUG: bool = Field(True, env="DEBUG")
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file="manager/.env",
         env_file_encoding="utf-8",
         extra="ignore"
     )
