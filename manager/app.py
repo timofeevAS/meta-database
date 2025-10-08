@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from config import settings
+from manager.config import settings
 
-from api.routers import health
+from manager.api.routers import health
 
 def create_app() -> FastAPI:
     app = FastAPI(title="meta-database manager", debug=settings.DEBUG)

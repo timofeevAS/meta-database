@@ -1,4 +1,4 @@
-from app import app
+from manager.app import app
 
 # TODO:
 # Run application:
