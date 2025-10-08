@@ -6,6 +6,8 @@ from manager.services.metadata_db.pool import init_pool, get_pool
 from manager.services.metadata_db.tx import tx
 from manager.services.metadata_db.repo import insert_database, list_databases
 
+from manager.schemas.metadata import Database
+
 
 class MetadataDBServiceRepoTestCase(unittest.TestCase):
     @classmethod
@@ -129,10 +131,10 @@ class MetadataDBServiceRepoTestCase(unittest.TestCase):
             get_pool().closeall()
 
     def test_insert_and_list_roundtrip(self):
-            self.assertEqual(1, insert_database("database1"))
-            self.assertEqual(2, insert_database("database2"))
+            self.assertEqual(Database(id=1, name="database1"), insert_database("database1"))
+            self.assertEqual(Database(id=2, name="database2"), insert_database("database2"))
 
-            self.assertEqual(["database1", "database2"], list_databases())
+            self.assertEqual([Database(id=1, name="database1"), Database(id=2, name="database2")], list_databases())
 
 
 if __name__ == "__main__":

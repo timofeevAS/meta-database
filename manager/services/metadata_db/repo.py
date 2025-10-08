@@ -1,18 +1,26 @@
 from psycopg2.extras import RealDictCursor
+
+from typing import List
+
+from manager.schemas.metadata import Database
 from .tx import tx
 
 # --- DATABASES ---
-def insert_database(name: str) -> int:
-    """Insert a new database record or return existing id."""
+def insert_database(name: str) -> Database:
+    """Insert a new database row and return it as a Pydantic model."""
+    # TODO: DDL doesn't have UNIQUE(name), so duplicates are possible.
     with tx() as conn, conn.cursor(cursor_factory=RealDictCursor) as cur:
-        cur.execute("""--sql
-            INSERT INTO databases(name) VALUES (%s) RETURNING id;
-        """, (name,))
-        return cur.fetchone()["id"]
+        cur.execute(
+            "INSERT INTO databases(name) VALUES (%s) RETURNING id, name;",
+            (name,),
+        )
+        row = cur.fetchone()
+        # Database is frozen (read-only), safe to return
+        return Database(id=row["id"], name=row["name"])
 
-
-def list_databases() -> list[str]:
-    """Return a list of all database names."""
-    with tx(readonly=True) as conn, conn.cursor() as cur:
-        cur.execute("SELECT name FROM databases ORDER BY name;")
-        return [row[0] for row in cur.fetchall()]
+def list_databases() -> List[Database]:
+    """Return all databases as view models (name only)."""
+    with tx(readonly=True) as conn, conn.cursor(cursor_factory=RealDictCursor) as cur:
+        cur.execute("SELECT id, name FROM databases ORDER BY id;")
+        rows = cur.fetchall()
+        return [Database(id=r["id"], name=r["name"]) for r in rows]
