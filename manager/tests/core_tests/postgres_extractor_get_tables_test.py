@@ -54,12 +54,17 @@ class TestPostgresExtractor(unittest.TestCase):
                 id SERIAL PRIMARY KEY,
                 title TEXT
             );
+            CREATE TABLE tmp_managers (
+                passcard_id INT NOT NULL,
+                passcard_region VARCHAR(50) NOT NULL,
+                manager_name VARCHAR(100),
+                PRIMARY KEY (passcard_id, passcard_region));
         """)
 
     def tearDown(self):
         """Clean up after each test."""
         self._exec_sql("""
-            DROP TABLE IF EXISTS tmp_users, tmp_orders, tmp_products CASCADE;
+            DROP TABLE IF EXISTS tmp_users, tmp_orders, tmp_products, tmp_managers CASCADE;
         """)
 
     def test_list_tables_includes_temporary(self):
@@ -67,7 +72,7 @@ class TestPostgresExtractor(unittest.TestCase):
         tables = self.extractor.list_tables()
         table_names = {t["table_name"] for t in tables}
 
-        self.assertEqual({"tmp_users", "tmp_orders", "tmp_products"}, table_names)
+        self.assertEqual({"tmp_users", "tmp_orders", "tmp_products", "tmp_managers"}, table_names)
         
         self.assertEqual([
             {'name': 'id', 'data_type': 'integer', 'is_nullable': False, 'ordinal_position': 1, 'default': "nextval('tmp_users_id_seq'::regclass)"},
@@ -84,6 +89,11 @@ class TestPostgresExtractor(unittest.TestCase):
             {'name': 'id', 'data_type': 'integer', 'is_nullable': False, 'ordinal_position': 1, 'default': "nextval('tmp_products_id_seq'::regclass)"},
             {'name': 'title', 'data_type': 'text', 'is_nullable': True, 'ordinal_position': 2, 'default': None}],
             self.extractor.list_columns("public", "tmp_products"))
+
+        self.assertEqual([{'name': 'passcard_id', 'data_type': 'integer', 'is_nullable': False, 'ordinal_position': 1, 'default': None},
+                          {'name': 'passcard_region', 'data_type': 'character varying(50)', 'is_nullable': False, 'ordinal_position': 2, 'default': None},
+                          {'name': 'manager_name', 'data_type': 'character varying(100)', 'is_nullable': True, 'ordinal_position': 3, 'default': None}],
+                          self.extractor.list_columns("public", "tmp_managers"))
         
         # Primary keys
         self.assertEqual([{'constraint_name': 'tmp_users_pkey', 'columns': ['id'], 'ordinal_positions': [1]}], 
@@ -93,7 +103,10 @@ class TestPostgresExtractor(unittest.TestCase):
                          self.extractor.list_primary_keys("public", "tmp_orders"))
         
         self.assertEqual([{'constraint_name': 'tmp_products_pkey', 'columns': ['id'], 'ordinal_positions': [1]}], 
-                    self.extractor.list_primary_keys("public", "tmp_products"))
+                        self.extractor.list_primary_keys("public", "tmp_products"))
+        
+        self.assertEqual([{'constraint_name': 'tmp_managers_pkey', 'columns': ['passcard_id', 'passcard_region'], 'ordinal_positions': [1, 2]}], 
+                         self.extractor.list_primary_keys("public", "tmp_managers"))
         
         # Foreign (References keys)
         self.assertEqual([], self.extractor.list_foreign_keys("public", "tmp_users"))
@@ -107,6 +120,8 @@ class TestPostgresExtractor(unittest.TestCase):
                           self.extractor.list_foreign_keys("public", "tmp_orders"))
         
         self.assertEqual([], self.extractor.list_foreign_keys("public", "tmp_products"))
+
+        self.assertEqual([], self.extractor.list_foreign_keys("public", "tmp_managers"))
         
         
 
