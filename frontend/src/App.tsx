@@ -6,7 +6,7 @@ export default function App() {
 
   useEffect(() => {
     // Simple example: fetch from FastAPI /api
-    fetch('/api/metadata/databases')
+    fetch('/api/databases')
       .then(r => r.ok ? r.json() : Promise.reject(r.statusText))
       .then((data) => setDatabases(data.map((d: { name: string }) => d.name)))
       .catch((e) => setError(String(e)))
