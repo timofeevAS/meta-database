@@ -17,5 +17,9 @@ def create_app(test_dsn: str | None = None) -> FastAPI:
 
     app.include_router(health.router, tags=["health"])
     app.include_router(metadata.router, tags=["metadata"], prefix="/api")
+    
+    static_dir = Path(__file__).parent / "static"
+    # mount at "/" so GET / serves index.html automatically
+    app.mount("/", StaticFiles(directory=static_dir, html=True), name="frontend")
 
     return app
