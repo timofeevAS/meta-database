@@ -1,9 +1,10 @@
+from pathlib import Path
 from fastapi import FastAPI
-from manager.config import settings
+from fastapi.staticfiles import StaticFiles
 
+from manager.config import settings
 from manager.api.routers import health
 from manager.api.routers import metadata
-
 from manager.services.metadata_db.pool import init_pool
 
 def create_app(test_dsn: str | None = None) -> FastAPI:
