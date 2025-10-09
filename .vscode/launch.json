@@ -5,6 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python Debugger: FastAPI manager.main",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "manager.main:app",
+                "--host", "127.0.0.1",
+                "--port", "8000",
+                "--reload"
+            ],
+            "jinja": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
             "name": "Python Debugger: Python File",
             "type": "debugpy",
             "request": "launch",
@@ -18,8 +34,10 @@
             "module": "unittest",
             "args": [
                 "discover",
-                "-s", "manager/tests",
-                "-p", "${fileBasename}",
+                "-s",
+                "manager/tests",
+                "-p",
+                "${fileBasename}",
                 "-v"
             ],
             "cwd": "${workspaceFolder}",

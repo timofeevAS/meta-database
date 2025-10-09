@@ -2,7 +2,6 @@ import psycopg2
 from typing import List, Dict, Any
 from manager.core.extractor.base import BaseExtractor, ColumnInfo, ForeignKeyInfo, PrimaryKeyInfo
 
-
 class PostgresExtractor(BaseExtractor):
     """
     PostgreSQL implementation of BaseExtractor.
