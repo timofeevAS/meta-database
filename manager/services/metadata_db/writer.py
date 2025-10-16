@@ -8,8 +8,8 @@ from psycopg2 import connect
 from psycopg2.extras import execute_values
 
 from manager.config import settings
-from manager.core.extractor.base import ColumnInfo, PrimaryKeyInfo
-from manager.schemas.metadata import Column, Database, Credential, PrimaryKey, PrimaryKeyColumn, Table
+from manager.core.extractor.base import ColumnInfo, ForeignKeyInfo, PrimaryKeyInfo
+from manager.schemas.metadata import Column, Database, Credential, ForeignKey, ForeignKeyColumn, PrimaryKey, PrimaryKeyColumn, Table
 from manager.services.metadata_db.tx import tx
 
 from manager.core.extractor.postgres import PostgresExtractor
@@ -98,6 +98,48 @@ def _ensure_primary_key_columns(cur, primary_key_id: int, pkeys: List[PrimaryKey
 
     return ensured
 
+def _ensure_foreign_keys(cur, table_id: int, fkeys: List[ForeignKeyInfo]) -> List[ForeignKey]:
+    ensured: List[ForeignKey] = []
+    for fkey in fkeys:
+        cur.execute("""--sql
+            SELECT id FROM tables WHERE name = %s
+        """, (fkey["referenced_table"],))
+
+        rows = cur.fetchall()[0]
+        ref_table_id: int = rows[0]
+
+        cur.execute("""--sql
+            INSERT INTO foreign_keys (table_id, referenced_table_id)
+            VALUES (%s, %s)
+            RETURNING id
+        """, (table_id, ref_table_id,))
+        foreign_key_id: int = cur.fetchone()[0]
+        ensured.append(
+            ForeignKey(id=foreign_key_id, table_id=table_id, referenced_table_id=ref_table_id))
+        
+        for ordinal_position, (src_name, tgt_name) in enumerate(fkey["column_pairs"], start=1):
+            # Source column id.
+            cur.execute("""--sql
+                SELECT id FROM columns
+                WHERE table_id = %s AND name = %s
+            """, (table_id, src_name))
+            src_col_id = cur.fetchone()[0]
+
+            # Ref table id.
+            cur.execute("""--sql
+                SELECT id FROM columns
+                WHERE table_id = %s AND name = %s
+            """, (ref_table_id, tgt_name))
+            tgt_col_id = cur.fetchone()[0]
+
+            cur.execute("""--sql
+                INSERT INTO foreign_key_columns
+                    (fk_id, column_id, referenced_column_id, ordinal_position)
+                VALUES (%s, %s, %s, %s)
+            """, (foreign_key_id, src_col_id, tgt_col_id, ordinal_position))
+
+    return ensured
+
 def fill_metadata_from_dsn(dsn: str) -> None:
     """
     Atomic filling of metadata from DSN string.
@@ -131,6 +173,7 @@ def fill_metadata_from_dsn(dsn: str) -> None:
                 columns_by_table: Dict[int, List[Column]] = {}
                 for table in tables: 
                     # TODO: big abstarction problem with "public" here.
+                    # TODO: should add database_id?
                     columns: List[Column] = _ensure_columns(cur, table.id, extractor.list_columns("public", table.name))
                     columns_by_table[table.id] = columns
                 
@@ -142,3 +185,7 @@ def fill_metadata_from_dsn(dsn: str) -> None:
                         _ensure_primary_key_columns(cur, pkey.id, extractor.list_primary_keys("public", table.name))
                     
                 # TODO make foreign keys
+                for table in tables:
+                    # TODO: should add database_id?
+                    fkeys = _ensure_foreign_keys(cur, table.id, extractor.list_foreign_keys("public", table.name))
+                
