@@ -12,8 +12,8 @@ class HealthEndpointTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Test application for all class.
-        dsn = f"postgresql://{config.user}:{config.password}@{config.host}:{config.port}/{config.dbname}"
-        cls.app = create_app(test_dsn=dsn)
+        cls.dsn = f"postgresql://{config.user}:{config.password}@{config.host}:{config.port}/{config.dbname}"
+        cls.app = create_app(test_dsn=cls.dsn)
         cls.client = TestClient(cls.app)
 
         # Setting up database.
