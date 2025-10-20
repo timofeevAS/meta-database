@@ -47,3 +47,12 @@ export async function getDatabasesWithAddress(): Promise<DatabaseInfo[]> {
 export async function getDatabases(): Promise<DatabaseInfo[]> {
   return getDatabasesWithAddress();
 }
+
+export async function addDatabaseByDsn(dsn: string): Promise<void> {
+  try {
+    await api.post("/metadata/fill", { dsn });
+  } catch (err: any) {
+    console.error("Failed to fill metadata:", err);
+    throw new Error(err.response?.data?.detail ?? "Request failed");
+  }
+}
