@@ -1,9 +1,15 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import path from 'path';
 
 // IMPORTANT: outDir points to FastAPI static
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
   root: '.',                          // keep default
   build: {
     outDir: '../manager/static',      // FastAPI will serve this dir

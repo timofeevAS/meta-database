@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { ManagerDB } from './ManagerDB'
 
 export default function App() {
   const [databases, setDatabases] = useState<string[]>([])
@@ -13,12 +14,8 @@ export default function App() {
   }, [])
 
   return (
-    <div style={{ padding: 24 }}>
-      <h1>meta-database UI</h1>
-      {error && <p>Error: {error}</p>}
-      <ul>
-        {databases.map((n) => <li key={n}>{n}</li>)}
-      </ul>
+    <div>
+      <ManagerDB/>
     </div>
   )
 }

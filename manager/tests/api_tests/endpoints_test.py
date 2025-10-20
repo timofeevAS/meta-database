@@ -124,5 +124,14 @@ class HealthEndpointTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual([{"id": 1, "name": "database1"}, {"id": 2, "name": "database2"}, {"id": 3, "name": "database3"}], response.json())
 
+    def test_get_database_address(self):
+        response: httpx.Response = self.client.post("/api/metadata/fill", json={"dsn": self.dsn})
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get("/api/databases/metadata_test/address")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual("localhost:55432", response.json())
+
+
 if __name__ == "__main__":
     unittest.main()
