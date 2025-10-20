@@ -30,8 +30,10 @@ export function ManagerDB() {
                     ))}
                 </tbody>
             </table>
-
-            <button className="db-button">Add new</button>
+            <div className="db-adder">
+                <button className="db-button">Add new</button>
+                <input placeholder="postgresql://username:password@domain.example.com:port/databasename"></input>
+            </div>
         </div>
     );
 }
