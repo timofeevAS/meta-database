@@ -7,7 +7,7 @@ class DsnparsePostgresTestCase(unittest.TestCase):
         dsn = "postgresql://pguser:pgpass@db.example.com:5432/mydb"
 
         r = dsnparse.parse(dsn)
-        self.assertIn(r.scheme, ("postgresql", "postgres"))   # допускаем оба варианта схемы
+        self.assertIn(r.scheme, ("postgresql", "postgres"))
         self.assertEqual(r.username, "pguser")
         self.assertEqual(r.password, "pgpass")
         self.assertEqual(r.host, "db.example.com")
