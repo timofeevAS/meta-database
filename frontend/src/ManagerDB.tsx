@@ -54,13 +54,6 @@ export function ManagerDB() {
                 </tbody>
             </table>
             <div className="db-adder">
-                <input
-                    placeholder="postgresql://username:password@domain.example.com:port/databasename"
-                    value={newDsn}
-                    onChange={(e) => setNewDsn(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleAdd()}
-                />
-
                 <button
                     className="db-button"
                     onClick={handleAdd}
@@ -68,6 +61,12 @@ export function ManagerDB() {
                 >
                     {saving ? "Adding..." : "Add new"}
                 </button>
+                <input
+                    placeholder="postgresql://username:password@domain.example.com:port/databasename"
+                    value={newDsn}
+                    onChange={(e) => setNewDsn(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleAdd()}
+                />
             </div>
         </div>
     );
