@@ -1,10 +1,13 @@
 import { useState } from 'react'
 
 import "./SelectFactory.css";
+import type { SelectFactoryProps } from './types';
 
-export function SelectFactory() {
+export function SelectFactory(metadata: SelectFactoryProps) {
     /* TODO: add real setSqlQuery */
     const [sqlQuery, setSqlQuery] = useState("-- Your SQL query.");
+
+    console.log("Loaded metadata:", metadata);
 
     return (
         <div className="sf-container">

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { ManagerDB } from './ManagerDB'
 import { SelectFactory } from './SelectFactory'
 
+import { selectFactoryPropsMock } from './types'
+
 export default function App() {
   const [databases, setDatabases] = useState<string[]>([])
   const [error, setError] = useState<string | null>(null)
@@ -16,8 +18,8 @@ export default function App() {
 
   return (
     <div>
-      <ManagerDB/>
-      <SelectFactory/>
+      <ManagerDB />
+      <SelectFactory {...selectFactoryPropsMock} />
     </div>
   )
 }
