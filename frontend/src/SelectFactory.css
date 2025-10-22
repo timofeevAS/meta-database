@@ -1,0 +1,41 @@
+.sf-container {
+    background-color: #f9f9f9;
+    color: #222;
+    font-family: Consolas, "Courier New", monospace;
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sf-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 16px;
+}
+
+.sf-button {
+    padding: 8px 14px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.sf-example {
+    padding: 8px 10px;
+    font-family: inherit;
+    font-size: 12px;
+    border: 2px solid #444;
+    color: #757575;
+    border-radius: 6px;
+    max-width: 30%;
+    min-height: fit-content;
+}

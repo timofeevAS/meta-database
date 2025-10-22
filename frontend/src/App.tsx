@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ManagerDB } from './ManagerDB'
+import { SelectFactory } from './SelectFactory'
 
 export default function App() {
   const [databases, setDatabases] = useState<string[]>([])
@@ -16,6 +17,7 @@ export default function App() {
   return (
     <div>
       <ManagerDB/>
+      <SelectFactory/>
     </div>
   )
 }
