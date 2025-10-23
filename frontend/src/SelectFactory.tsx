@@ -39,24 +39,54 @@ type GenColumn = {
     tableName: string;
 }
 
+type GenTable = {
+    databaseName: string;
+    tableName: string;
+}
+
 function formatSelectColumnItem(genColumn: GenColumn): string {
     return `${genColumn.columnName} (${genColumn.databaseName})`
 }
 
+function formatSelectTableItem(genColumn: GenTable): string {
+    return `${genColumn.tableName} (${genColumn.databaseName})`
+}
+
+function parseTableDisplayValue(value: string): { tableName: string; databaseName: string } | null {
+    const match = value.match(/^(.+)\s*\((.+)\)$/);
+    if (!match) return null;
+
+    const [, tableName, databaseName] = match.map(s => s.trim());
+    return { tableName, databaseName };
+}
+
 function SfGenerator({ metadata, onPreview }: GenProps) {
     const [dbName, setDbName] = useState<string>("");
+    const [selectedTable, setSelectedTable] = useState<GenTable>({ tableName: "", databaseName: "" });
+    const [availableTables, setAvailableTables] = useState<GenTable[]>([])
     const [selectedCols, setSelectedCols] = useState<GenColumn[]>([]);
     const [availableCols, setAvailableCols] = useState<GenColumn[]>([]);
 
     const colKey = (c: GenColumn) => `${c.databaseName}::${c.columnName}`;
+    const tableKey = (c: GenTable) => `${c.databaseName}::${c.tableName}`;
+    const parseTableKey = (key: string): GenTable => {
+        const [databaseName, tableName] = key.split("::");
+        console.log(`key: ${key}`)
+        return { databaseName: databaseName, tableName: tableName };
+    };
 
     {/* Initialization for availableCols */ }
     useEffect(() => {
         if (!metadata) return;
 
         const cols: GenColumn[] = [];
+        const tables: GenTable[] = [];
         metadata.forEach((db) => {
             db.tables.forEach((table) => {
+                tables.push({
+                    tableName: table.tableName,
+                    databaseName: db.databaseName,
+                });
                 table.columns.forEach((colName) => {
                     cols.push({
                         columnName: colName,
@@ -68,6 +98,7 @@ function SfGenerator({ metadata, onPreview }: GenProps) {
         });
 
         setAvailableCols(cols);
+        setAvailableTables(tables);
     }, [metadata]);
 
     useEffect(() => {
@@ -110,7 +141,56 @@ function SfGenerator({ metadata, onPreview }: GenProps) {
         });
 
         setAvailableCols(cols);
+        const newTable: GenTable = { databaseName: dbName, tableName: etalonTableName };
+        console.log("Update selected table", newTable);
+        setSelectedTable(newTable);
     }, [selectedCols]);
+
+    useEffect(() => {
+        if (selectedTable.databaseName === "" && selectedTable.tableName === "") {
+            const cols: GenColumn[] = [];
+            metadata.forEach((db) => {
+                db.tables.forEach((table) => {
+                    table.columns.forEach((colName) => {
+                        cols.push({
+                            columnName: colName,
+                            databaseName: db.databaseName,
+                            tableName: table.tableName,
+                        });
+                    });
+                });
+            });
+
+            setAvailableCols(cols);
+            setSelectedCols([]);
+            return;
+        }
+
+        const cols: GenColumn[] = [];
+        // Take columns only from same database and same table!!!
+        metadata.forEach((db) => {
+            if (db.databaseName === selectedTable.databaseName) {
+                db.tables.forEach((table) => {
+                    if (table.tableName === selectedTable.tableName) {
+                        table.columns.forEach((colName) => {
+                            cols.push({
+                                columnName: colName,
+                                databaseName: db.databaseName,
+                                tableName: table.tableName,
+                            });
+                        });
+                    }
+                });
+            }
+        });
+        
+        console.log("Update available cols via useEffect(selectedTable)");
+        console.table(cols);
+        setAvailableCols(cols);
+        setDbName(selectedTable.databaseName)
+
+
+    }, [selectedTable])
 
     {/* Debug output. */ }
     useEffect(() => {
@@ -118,9 +198,14 @@ function SfGenerator({ metadata, onPreview }: GenProps) {
     }, [selectedCols]);
 
     useEffect(() => {
-        window.console.log('availableCols changed:');
-        window.console.log(availableCols);
+        console.log('availableCols changed:');
+        console.table(availableCols);
     }, [availableCols]);
+
+    useEffect(() => {
+        console.log('selectedTable changed:');
+        console.log(selectedTable);
+    }, [selectedTable]);
 
     useEffect(() => {
         console.log('SfGenerator mounted');
@@ -129,7 +214,7 @@ function SfGenerator({ metadata, onPreview }: GenProps) {
 
     return (
         <div className="sf-generator-container">
-            <div className="sf-columns">
+            <div className="sf-generator">
                 <span className="sf-keyword">SELECT</span>
                 {/* already selected */}
                 {selectedCols?.map((col) => (
@@ -217,6 +302,40 @@ function SfGenerator({ metadata, onPreview }: GenProps) {
                                     {formatSelectColumnItem(availableCol)}
                                 </option>
                             ))}
+                    </select>
+                }
+                <span className="sf-keyword">FROM</span>
+                {
+                    <select
+                        key={tableKey(selectedTable)}
+                        value={formatSelectTableItem(selectedTable)}
+                        onChange={(e) => {
+                            const newValue = e.target.value;
+                            if (newValue === "") {
+                                setSelectedTable({ databaseName: "", tableName: "" })
+                            }
+                            const parsed = parseTableDisplayValue(newValue);
+                            if (parsed) {
+                                setSelectedTable(parsed);
+                            }
+                            return;
+                        }}
+                    >
+                        <option value="">? select table</option>
+                        {selectedTable?.databaseName === "" ? availableTables
+                            // exclude already selected
+                            .map((availableTable) => (
+                                <option
+                                    key={tableKey(availableTable)}
+                                    value={formatSelectTableItem(availableTable)}
+                                >
+                                    {formatSelectTableItem(availableTable)}
+                                </option>
+                            )) : (<option
+                                value={formatSelectTableItem(selectedTable)}
+                            >
+                                {formatSelectTableItem(selectedTable)}
+                            </option>)}
                     </select>
                 }
             </div>
