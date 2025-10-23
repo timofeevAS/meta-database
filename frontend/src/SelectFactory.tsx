@@ -183,7 +183,7 @@ function SfGenerator({ metadata, onPreview }: GenProps) {
                 });
             }
         });
-        
+
         console.log("Update available cols via useEffect(selectedTable)");
         console.table(cols);
         setAvailableCols(cols);
