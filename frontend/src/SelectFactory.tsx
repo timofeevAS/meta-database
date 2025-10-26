@@ -44,6 +44,20 @@ type GenTable = {
     tableName: string;
 }
 
+type SqlOperator =
+    | "="
+    | "!="
+    | ">"
+    | "<"
+    | ">="
+    | "<="
+
+type GenCondition = {
+    column: GenColumn,
+    operator: SqlOperator,
+    value: string
+}
+
 function formatSelectColumnItem(genColumn: GenColumn): string {
     return `${genColumn.columnName} (${genColumn.databaseName})`
 }
@@ -66,6 +80,7 @@ function SfGenerator({ metadata, onPreview }: GenProps) {
     const [availableTables, setAvailableTables] = useState<GenTable[]>([])
     const [selectedCols, setSelectedCols] = useState<GenColumn[]>([]);
     const [availableCols, setAvailableCols] = useState<GenColumn[]>([]);
+    const [selectedCondition, setSelectedCondition] = useState<GenCondition>({ column: { columnName: "", databaseName: "", tableName: "" }, operator: "=", value: "" })
 
     const colKey = (c: GenColumn) => `${c.databaseName}::${c.columnName}`;
     const tableKey = (c: GenTable) => `${c.databaseName}::${c.tableName}`;
@@ -191,6 +206,28 @@ function SfGenerator({ metadata, onPreview }: GenProps) {
 
 
     }, [selectedTable])
+
+
+    function getColumnsFromGenTable(gt: GenTable): GenColumn[] {
+        const cols: GenColumn[] = [];
+        metadata.forEach((db) => {
+            if (db.databaseName === gt.databaseName) {
+                db.tables.forEach((table) => {
+                    if (table.tableName == gt.tableName) {
+                        table.columns.forEach((colName) => {
+                            cols.push({
+                                columnName: colName,
+                                databaseName: db.databaseName,
+                                tableName: table.tableName,
+                            });
+                        });
+                    }
+                });
+            }
+        });
+        return cols;
+    }
+
 
     {/* Debug output. */ }
     useEffect(() => {
@@ -338,6 +375,74 @@ function SfGenerator({ metadata, onPreview }: GenProps) {
                             </option>)}
                     </select>
                 }
+                {selectedCols.length > 0 && (
+                    <div className="sf-condition">
+                        <span className="sf-keyword">WHERE</span>
+                        <select
+                            value={selectedCondition.column ? formatSelectColumnItem(selectedCondition.column) : ""}
+                            onChange={(e) => {
+                                console.log("try to set new column in condition.");
+                                const val = e.target.value;
+                                if (val === "") {
+                                   // Reset condition.
+                                    setSelectedCondition({ column: { columnName: "", databaseName: "", tableName: "" }, operator: "=", value: "" });
+                                    return;
+                                }
+
+                                const currentColumns: GenColumn[] = getColumnsFromGenTable(selectedTable);
+                                console.log("Get current columns:", currentColumns);
+                                console.log("Val:", val);
+                                const newColumn: GenColumn | undefined = currentColumns.find((c) => {
+                                    return formatSelectColumnItem(c) === val;
+                                });
+                                if (newColumn) {
+                                    console.log("New condition: (update column)", newColumn);
+                                    setSelectedCondition(prev => ({ ...prev, column: newColumn }));
+                                }
+                                else {
+                                    console.log("newColumns is undefined");
+                                }
+                            }}
+                        >
+                            <option value="">+ add column</option>
+                            {getColumnsFromGenTable(selectedTable)
+                                .map((col) => (
+                                    <option
+                                        key={colKey(col)}
+                                        value={formatSelectColumnItem(col)}
+                                    >
+                                        {formatSelectColumnItem(col)}
+                                    </option>
+                                ))}
+                        </select>
+                        <div>
+                            <select
+                                className="sf-condition-operator"
+                                value={selectedCondition.operator}
+                                onChange={(e) => {
+                                    const val = e.target.value;
+                                    const newOperator: SqlOperator = val as SqlOperator;
+                                    setSelectedCondition(prev => ({ ...prev, operator: newOperator }));
+                                }}
+                            >
+                                <option value="=">=</option>
+                                <option value="!=">≠</option>
+                                <option value=">">&gt;</option>
+                                <option value="<">&lt;</option>
+                                <option value=">=">≥</option>
+                                <option value="<=">≤</option>
+                            </select>
+                        </div>
+                        <input
+                            className="sf-condition-value"
+                            placeholder="value (name, 123)"
+                            value={selectedCondition.value}
+                            onChange={(e) => {
+                                setSelectedCondition(prev => ({ ...prev, value: e.target.value }));
+                            }}
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );

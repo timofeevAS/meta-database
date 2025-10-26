@@ -96,3 +96,64 @@
 .sf-keyword {
     font-weight: bold;
 }
+
+/* --- WHERE BLOCK --- */
+.sf-condition {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #fafafa;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+}
+
+/* слово WHERE */
+.sf-condition .sf-keyword {
+    font-weight: bold;
+    color: #000;
+}
+
+/* select с колонками и оператором */
+.sf-condition select {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    color: #222;
+    background-color: #fff;
+    border: 2px solid #aaa;
+    border-radius: 6px;
+    padding: 4px 8px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.sf-condition-operator {
+    text-align: center;
+}
+
+.sf-condition-value {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    color: #222;
+    border: 2px solid #aaa;
+    border-radius: 6px;
+    padding: 4px 8px;
+    min-width: 120px;
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.sf-condition select:focus,
+.sf-condition-value:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.sf-condition select:hover,
+.sf-condition-value:hover {
+    border-color: #888;
+}
