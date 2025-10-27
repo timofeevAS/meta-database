@@ -387,6 +387,7 @@ function SfGenerator({ metadata, onPreview, onSelectDatabase }: GenProps) {
                 {/** TODO: some HACK here. need to fix? */}
                 {selection.selectedCols.length !== selection.availableCols.length &&
                     <select
+                        key={`add-col-${selection.selectedTable.databaseName}-${selection.selectedTable.tableName}-${selection.availableCols.length}`}
                         value=""
                         onChange={(e) => {
                             const selectedValue = e.target.value;
