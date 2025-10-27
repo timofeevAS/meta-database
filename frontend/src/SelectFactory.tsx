@@ -84,11 +84,6 @@ function SfGenerator({ metadata, onPreview }: GenProps) {
 
     const colKey = (c: GenColumn) => `${c.databaseName}::${c.columnName}`;
     const tableKey = (c: GenTable) => `${c.databaseName}::${c.tableName}`;
-    const parseTableKey = (key: string): GenTable => {
-        const [databaseName, tableName] = key.split("::");
-        console.log(`key: ${key}`)
-        return { databaseName: databaseName, tableName: tableName };
-    };
 
     {/* Initialization for availableCols */ }
     useEffect(() => {
