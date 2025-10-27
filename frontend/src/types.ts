@@ -10,6 +10,18 @@ export interface DatabaseMetadataInfo {
 
 export interface SelectFactoryProps {
   metadata: DatabaseMetadataInfo[];
+    onUpdateHistory: ()=>void;
+}
+
+export interface SavedQuery {
+  databaseName: string;
+  sqlQuery: string;
+  createdAt: Date;
+}
+
+export interface QueryHistoryProps {
+  history: SavedQuery[];
+  onUpdateHistory: ()=>void;
 }
 
 export const sampleMetaDataMock1: DatabaseMetadataInfo = {
@@ -35,4 +47,5 @@ export const databasesMetaDataMocks: DatabaseMetadataInfo[] = [
 
 export const selectFactoryPropsMock = {
   metadata: databasesMetaDataMocks,
+  onUpdateHistory: () => {}
 } satisfies SelectFactoryProps;

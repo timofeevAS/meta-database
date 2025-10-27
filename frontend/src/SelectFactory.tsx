@@ -4,7 +4,7 @@ import "./SelectFactory.css";
 import type { DatabaseMetadataInfo, SelectFactoryProps } from './types';
 import { executeQuery } from "./services/metadataApi";
 
-export function SelectFactory(metadata: SelectFactoryProps) {
+export function SelectFactory({metadata, onUpdateHistory}: SelectFactoryProps) {
     /* TODO: add real setSqlQuery */
     const [sqlQuery, setSqlQuery] = useState("");
     const [databaseName, setDatabaseName] = useState(""); // TODO: Using this database name in future to complete sql query.
@@ -24,6 +24,7 @@ export function SelectFactory(metadata: SelectFactoryProps) {
         } finally {
             setLoading(false);
         }
+        onUpdateHistory();
     }
 
 
@@ -31,7 +32,7 @@ export function SelectFactory(metadata: SelectFactoryProps) {
         <div className="sf-container">
             <h2 className="sf-title">Select from meta-storage</h2>
 
-            <SfGenerator metadata={metadata.metadata} onPreview={setSqlQuery} onSelectDatabase={setDatabaseName} />
+            <SfGenerator metadata={metadata} onPreview={setSqlQuery} onSelectDatabase={setDatabaseName} />
 
             <div className="sf-example">
                 {sqlQuery}

@@ -2,7 +2,7 @@ from psycopg2.extras import RealDictCursor
 
 from typing import List
 
-from manager.schemas.metadata import Column, Credential, Database, Table
+from manager.schemas.metadata import Column, Credential, Database, SavedQuery, Table
 from .tx import tx
 
 # --- DATABASES ---
@@ -74,3 +74,14 @@ def get_credentials(database_name: str) -> Credential:
                           port=row["port"], 
                           username=row["username"], 
                           password=row["password"])
+        
+def list_saved_query() -> List[SavedQuery]:
+    """Return saved query as view models."""
+    with tx(readonly=True) as conn, conn.cursor(cursor_factory=RealDictCursor) as cur:
+        cur.execute("""--sql
+                   SELECT
+                        id, database_id, sql_query, created_at
+                    FROM saved_queries ORDER BY created_at DESC;
+                    """)
+        rows = cur.fetchall()
+        return [SavedQuery(id=r["id"], database_id=r["database_id"], sql_query=r["sql_query"], created_at=r["created_at"]) for r in rows]    

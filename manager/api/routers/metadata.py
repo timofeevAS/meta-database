@@ -1,12 +1,13 @@
+from datetime import datetime
 from typing import List
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 from manager.schemas.metadata import Database 
 from manager.services.metadata_db.query import execute_query
-from manager.services.metadata_db.repo import list_databases, get_database_address_by_name, list_tables, list_columns
+from manager.services.metadata_db.repo import list_databases, get_database_address_by_name, list_saved_query, list_tables, list_columns
 
-from manager.services.metadata_db.writer import fill_metadata_from_dsn
+from manager.services.metadata_db.writer import fill_metadata_from_dsn, save_query
 
 router = APIRouter()
 
@@ -67,8 +68,26 @@ def fill_metadata(req: ExecuteSqlRequest):
     try:
         # TODO: SQL Injection can be here?
         query_execution_result = execute_query(req.database_name, req.sql_query)
+        save_query(req.database_name, req.sql_query)
         return {"status": "ok", "result": query_execution_result }
     except Exception as e:
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=400, detail=str(e))
+
+class DatabaseExecuteSqlRequest(BaseModel):
+    database_name: str
+    sql_query: str
+    created_at: datetime
+    
+@router.get("/metadata/query_list", response_model=List[DatabaseExecuteSqlRequest])
+def get_metadata_info():
+    query_list = list_saved_query()
+    result: List[DatabaseExecuteSqlRequest] = []
+    
+    databases = list_databases()
+    id_to_name = {item.id: item.name for item in databases}
+    for query in query_list:
+        database_name = id_to_name[query.database_id]
+        result.append(DatabaseExecuteSqlRequest(database_name=database_name, sql_query=query.sql_query, created_at=query.created_at))
+    return result

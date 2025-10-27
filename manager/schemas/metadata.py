@@ -1,5 +1,6 @@
 # manager/schemas/metadata.py
 from __future__ import annotations
+from datetime import datetime
 from typing import List, Tuple, Optional
 from pydantic import BaseModel, Field, ConfigDict
 
@@ -81,3 +82,10 @@ class Credential(BaseModel):
     port: int
     username: str
     password: str
+    
+class SavedQuery(BaseModel):
+    """Saved query row (read-only)."""
+    id: int
+    database_id: int
+    sql_query: str
+    created_at: datetime

@@ -188,4 +188,16 @@ def fill_metadata_from_dsn(dsn: str) -> None:
                 for table in tables:
                     # TODO: should add database_id?
                     fkeys = _ensure_foreign_keys(cur, table.id, extractor.list_foreign_keys("public", table.name))
-                
+                    
+                    
+def save_query(database_name: str, sql_query: str):
+    with tx() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""--sql
+                            SELECT id FROM databases WHERE name = %s
+                            """, (database_name,))
+
+                database_id: int = cur.fetchone()[0]
+                cur.execute("""--sql
+                            INSERT INTO saved_queries (database_id, sql_query) VALUES(%s, %s);    
+                            """, (database_id, sql_query))
