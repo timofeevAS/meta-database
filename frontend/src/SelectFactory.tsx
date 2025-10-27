@@ -6,6 +6,7 @@ import type { DatabaseMetadataInfo, SelectFactoryProps } from './types';
 export function SelectFactory(metadata: SelectFactoryProps) {
     /* TODO: add real setSqlQuery */
     const [sqlQuery, setSqlQuery] = useState("");
+    const [databaseName, setDatabaseName] = useState(""); // TODO: Using this database name in future to complete sql query.
 
     console.log("Loaded metadata:", metadata);
 
@@ -13,7 +14,7 @@ export function SelectFactory(metadata: SelectFactoryProps) {
         <div className="sf-container">
             <h2 className="sf-title">Select from meta-storage</h2>
 
-            <SfGenerator metadata={metadata.metadata} onPreview={setSqlQuery} />
+            <SfGenerator metadata={metadata.metadata} onPreview={setSqlQuery} onSelectDatabase={setDatabaseName} />
 
             <div className="sf-example">
                 {sqlQuery}
@@ -75,7 +76,7 @@ function parseTableDisplayValue(value: string): { tableName: string; databaseNam
     return { tableName, databaseName };
 }
 
-function SfGenerator({ metadata, onPreview }: GenProps) {
+function SfGenerator({ metadata, onPreview, onSelectDatabase }: GenProps) {
     const [dbName, setDbName] = useState<string>("");
     const [selectedTable, setSelectedTable] = useState<GenTable>({ tableName: "", databaseName: "" });
     const [availableTables, setAvailableTables] = useState<GenTable[]>([])
@@ -205,6 +206,9 @@ function SfGenerator({ metadata, onPreview }: GenProps) {
 
     {/* If something change update preview SQL query. */ }
     useEffect(() => { onPreview(getSqlQuery()); }, [selectedCols, selectedTable, selectedCondition]);
+    
+    {/* If database name update. Update parent's database name. */ }
+    useEffect(() => { onSelectDatabase(dbName); }, [dbName]);
 
     function getColumnsFromGenTable(gt: GenTable): GenColumn[] {
         const cols: GenColumn[] = [];
@@ -410,7 +414,7 @@ function SfGenerator({ metadata, onPreview }: GenProps) {
                                 console.log("try to set new column in condition.");
                                 const val = e.target.value;
                                 if (val === "") {
-                                   // Reset condition.
+                                    // Reset condition.
                                     setSelectedCondition({ column: { columnName: "", databaseName: "", tableName: "" }, operator: "=", value: "" });
                                     return;
                                 }
