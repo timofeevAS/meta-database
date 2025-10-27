@@ -5,7 +5,7 @@ import type { DatabaseMetadataInfo, SelectFactoryProps } from './types';
 
 export function SelectFactory(metadata: SelectFactoryProps) {
     /* TODO: add real setSqlQuery */
-    const [sqlQuery, setSqlQuery] = useState("-- Your SQL query.");
+    const [sqlQuery, setSqlQuery] = useState("");
 
     console.log("Loaded metadata:", metadata);
 
@@ -31,6 +31,7 @@ export function SelectFactory(metadata: SelectFactoryProps) {
 type GenProps = {
     metadata: DatabaseMetadataInfo[];
     onPreview: (sql: string) => void;
+    onSelectDatabase: (databaseName: string) => void;
 };
 
 type GenColumn = {
