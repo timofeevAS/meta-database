@@ -37,7 +37,7 @@ export default function App() {
   return (
     <div>
       <ManagerDB />
-      <SelectFactory {...metadata} />
+      {metadata.metadata.length > 0 && <SelectFactory {...metadata} />}
     </div>
   )
 }
