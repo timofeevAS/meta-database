@@ -3,6 +3,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 from manager.schemas.metadata import Database 
+from manager.services.metadata_db.query import execute_query
 from manager.services.metadata_db.repo import list_databases, get_database_address_by_name, list_tables, list_columns
 
 from manager.services.metadata_db.writer import fill_metadata_from_dsn
@@ -56,3 +57,18 @@ def get_metadata_info():
             db_metadata_info.tables.append(TableSimpleView(table_name=table.name, columns=columns_names))
         metadata_info_simple_view.metadata.append(db_metadata_info)
     return metadata_info_simple_view
+
+class ExecuteSqlRequest(BaseModel):
+    database_name: str
+    sql_query: str
+
+@router.post("/metadata/execute")
+def fill_metadata(req: ExecuteSqlRequest):
+    try:
+        # TODO: SQL Injection can be here?
+        query_execution_result = execute_query(req.database_name, req.sql_query)
+        return {"status": "ok", "result": query_execution_result }
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=400, detail=str(e))

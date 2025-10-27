@@ -2,13 +2,30 @@ import { useState, useEffect } from "react";
 
 import "./SelectFactory.css";
 import type { DatabaseMetadataInfo, SelectFactoryProps } from './types';
+import { executeQuery } from "./services/metadataApi";
 
 export function SelectFactory(metadata: SelectFactoryProps) {
     /* TODO: add real setSqlQuery */
     const [sqlQuery, setSqlQuery] = useState("");
     const [databaseName, setDatabaseName] = useState(""); // TODO: Using this database name in future to complete sql query.
+    const [result, setResult] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
 
     console.log("Loaded metadata:", metadata);
+
+    async function handleExecute() {
+        try {
+            setLoading(true);
+            const data = await executeQuery(databaseName, sqlQuery);
+            setResult(JSON.stringify(data, null, 2));
+        } catch (err) {
+            console.error("Error executing query:", err);
+            setResult("Error executing query");
+        } finally {
+            setLoading(false);
+        }
+    }
+
 
     return (
         <div className="sf-container">
@@ -21,10 +38,16 @@ export function SelectFactory(metadata: SelectFactoryProps) {
             </div>
 
             <div className="sf-executer">
-                <button className="sf-button">
-                    Execute
+                <button className="sf-button" onClick={handleExecute} disabled={loading}>
+                    {loading ? "Executing..." : "Execute"}
                 </button>
             </div>
+
+            {result && (
+                <pre className="sf-result">
+                    {result}
+                </pre>
+            )}
         </div>
     );
 }
@@ -206,7 +229,7 @@ function SfGenerator({ metadata, onPreview, onSelectDatabase }: GenProps) {
 
     {/* If something change update preview SQL query. */ }
     useEffect(() => { onPreview(getSqlQuery()); }, [selectedCols, selectedTable, selectedCondition]);
-    
+
     {/* If database name update. Update parent's database name. */ }
     useEffect(() => { onSelectDatabase(dbName); }, [dbName]);
 

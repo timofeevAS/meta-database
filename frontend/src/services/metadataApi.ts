@@ -56,3 +56,11 @@ export async function addDatabaseByDsn(dsn: string): Promise<void> {
     throw new Error(err.response?.data?.detail ?? "Request failed");
   }
 }
+
+export async function executeQuery(databaseName: string, sqlQuery: string) {
+    const response = await api.post("/metadata/execute", {
+        database_name: databaseName,
+        sql_query: sqlQuery,
+    });
+    return response.data;
+}

@@ -2,7 +2,7 @@ from psycopg2.extras import RealDictCursor
 
 from typing import List
 
-from manager.schemas.metadata import Column, Database, Table
+from manager.schemas.metadata import Column, Credential, Database, Table
 from .tx import tx
 
 # --- DATABASES ---
@@ -50,3 +50,27 @@ def get_database_address_by_name(name: str) -> str:
                     """, (name,))
         rows = cur.fetchone()
         return f"{rows["host_ipv4"]}:{rows["port"]}"
+    
+def get_credentials(database_name: str) -> Credential:
+    """Return credential of database as view models."""
+    with tx(readonly=True) as conn, conn.cursor(cursor_factory=RealDictCursor) as cur:
+        cur.execute("""--sql
+                   SELECT
+                        d.id AS database_id,
+                        c.id,
+                        c.host_ipv4,
+                        c.port,
+                        c.username,
+                        c.password
+                    FROM credentials AS c
+                    JOIN databases AS d ON c.database_id = d.id
+                    WHERE d.name = %s;
+                    """, (database_name,))
+        row = cur.fetchone()
+        
+        return Credential(id=row["id"], 
+                          database_id=row["database_id"], 
+                          host_ipv4=row["host_ipv4"], 
+                          port=row["port"], 
+                          username=row["username"], 
+                          password=row["password"])
