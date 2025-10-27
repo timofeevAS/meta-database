@@ -84,3 +84,13 @@ CREATE TABLE credentials (
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
 );
+
+-- =========================================
+-- SAVED QUERIES
+-- =========================================
+CREATE TABLE saved_queries (
+    id SERIAL PRIMARY KEY,
+    database_id INTEGER NOT NULL REFERENCES databases(id) ON DELETE CASCADE,
+    sql_query TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
