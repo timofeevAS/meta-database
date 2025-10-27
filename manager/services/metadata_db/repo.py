@@ -2,7 +2,7 @@ from psycopg2.extras import RealDictCursor
 
 from typing import List
 
-from manager.schemas.metadata import Database
+from manager.schemas.metadata import Column, Database, Table
 from .tx import tx
 
 # --- DATABASES ---
@@ -24,7 +24,21 @@ def list_databases() -> List[Database]:
         cur.execute("SELECT id, name FROM databases ORDER BY id;")
         rows = cur.fetchall()
         return [Database(id=r["id"], name=r["name"]) for r in rows]
-    
+
+def list_tables(database: Database) -> List[Table]:
+    """Return all tables from database as view models."""
+    with tx(readonly=True) as conn, conn.cursor(cursor_factory=RealDictCursor) as cur:
+        cur.execute("SELECT id, database_id, name FROM tables WHERE database_id = %s;", (database.id,))
+        rows = cur.fetchall()
+        return [Table(id=r["id"], database_id=r["database_id"], name=r["name"]) for r in rows] 
+
+def list_columns(table: Table) -> List[Column]:
+    """Return all columns from table as view models."""
+    with tx(readonly=True) as conn, conn.cursor(cursor_factory=RealDictCursor) as cur:
+        cur.execute("SELECT id, table_id, name, data_type FROM columns WHERE table_id = %s;", (table.id,))
+        rows = cur.fetchall()
+        return [Column(id=r["id"], table_id=r["table_id"], name=r["name"], data_type=r["data_type"]) for r in rows]    
+
 def get_database_address_by_name(name: str) -> str:
     """Return address of database in format domain:port."""
     with tx(readonly=True) as conn, conn.cursor(cursor_factory=RealDictCursor) as cur:
