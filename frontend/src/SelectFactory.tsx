@@ -202,6 +202,8 @@ function SfGenerator({ metadata, onPreview }: GenProps) {
 
     }, [selectedTable])
 
+    {/* If something change update preview SQL query. */ }
+    useEffect(() => { onPreview(getSqlQuery()); }, [selectedCols, selectedTable, selectedCondition]);
 
     function getColumnsFromGenTable(gt: GenTable): GenColumn[] {
         const cols: GenColumn[] = [];
@@ -223,6 +225,34 @@ function SfGenerator({ metadata, onPreview }: GenProps) {
         return cols;
     }
 
+    function getSqlQuery(): string {
+        if (!selectedTable.databaseName) {
+            return "-- Start generate your SELECT query. (Can start with choose table)";
+        }
+
+        // SELECT block. (if fields doesn't selected use *).
+        const cols = selectedCols.length > 0
+            ? selectedCols.map(c => c.columnName).join(", ")
+            : "*";
+
+        let sql = `SELECT ${cols}\nFROM ${selectedTable.tableName}`;
+
+        // WHERE block.
+        const cond = selectedCondition;
+        if (cond.column.columnName && cond.value !== undefined && cond.value !== null) {
+            const value =
+                cond.value === ""
+                    ? "''"
+                    : isFinite(Number(cond.value))
+                        ? cond.value
+                        : `'${cond.value.replace(/'/g, "''")}'`;
+
+            sql += `\nWHERE ${cond.column.columnName} ${cond.operator} ${value}`;
+        }
+
+        sql += ";";
+        return sql;
+    }
 
     {/* Debug output. */ }
     useEffect(() => {
