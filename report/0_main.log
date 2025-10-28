@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.5.3)  29 OCT 2025 00:23
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.5.3)  29 OCT 2025 00:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1846,13 +1846,15 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
 (C:\Users\atimo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ))
-(introduction.tex [3]) (conclusion.tex [4
+(introduction.tex [3]) (chapter_1.tex [4
+
+]) (conclusion.tex [5
 
 ])
 
-LaTeX Warning: Empty bibliography on input line 205.
+LaTeX Warning: Empty bibliography on input line 206.
 
-(appendixa.tex [5
+(appendixa.tex [6
 
 ])
 
@@ -1867,13 +1869,13 @@ See the caption package documentation for explanation.
 Package caption Warning: Unused \captionsetup[table] on input line 89.
 See the caption package documentation for explanation.
 
-[6
+[7
 
 ]
 \tf@toc=\write8
 \openout8 = `0_main.toc'.
 
-runsystem(latexminted cleantemp  --timestamp 20251029002311 90941D0C8AF37115109
+runsystem(latexminted cleantemp  --timestamp 20251029002616 90941D0C8AF37115109
 C04D4911BC8F6)...disabled (restricted).
 
  (0_main.aux)
@@ -1886,7 +1888,7 @@ L3 programming layer <2020/03/25>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `0_main.out' has not changed.
-(rerunfilecheck)             Checksum: 30BA8BA84536FDB7F2A5214C7C1A5668;444.
+(rerunfilecheck)             Checksum: 38778BAB46557CC1AF74C80E3D6B3CAD;711.
 
 Package biblatex Warning: Please (re)run Biber on the file:
 (biblatex)                0_main
@@ -1897,12 +1899,12 @@ Package logreq Info: Writing requests to '0_main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 38023 strings out of 409617
- 755648 string characters out of 5774014
- 2029061 words of memory out of 5000000
- 59627 multiletter control sequences out of 15000+600000
+ 38034 strings out of 409617
+ 755868 string characters out of 5774014
+ 2029350 words of memory out of 5000000
+ 59635 multiletter control sequences out of 15000+600000
  561517 words of font info for 71 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  94i,11n,93p,1153b,3882s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on 0_main.pdf (5 pages).
+Output written on 0_main.pdf (6 pages).
