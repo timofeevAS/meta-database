@@ -157,3 +157,35 @@
 .sf-condition-value:hover {
     border-color: #888;
 }
+
+.sf-agg-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-right: 8px;
+}
+
+.sf-agg-select {
+    font-family: Consolas, "Courier New", monospace;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.85rem;
+    color: #333;
+    cursor: pointer;
+}
+
+.sf-agg-select:hover {
+    border-color: #007bff;
+}
+
+.sf-column-select {
+    font-family: Consolas, "Courier New", monospace;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.9rem;
+    color: #333;
+}

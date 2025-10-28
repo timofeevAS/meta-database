@@ -4,7 +4,7 @@ import "./SelectFactory.css";
 import type { DatabaseMetadataInfo, SelectFactoryProps } from './types';
 import { executeQuery } from "./services/metadataApi";
 
-export function SelectFactory({metadata, onUpdateHistory, onShowQuery}: SelectFactoryProps) {
+export function SelectFactory({ metadata, onUpdateHistory, onShowQuery }: SelectFactoryProps) {
     /* TODO: add real setSqlQuery */
     const [sqlQuery, setSqlQuery] = useState("");
     const [databaseName, setDatabaseName] = useState(""); // TODO: Using this database name in future to complete sql query.
@@ -64,6 +64,7 @@ type GenColumn = {
     columnName: string;
     databaseName: string;
     tableName: string;
+    aggregate?: string;
 }
 
 type GenTable = {
@@ -283,7 +284,9 @@ function SfGenerator({ metadata, onPreview, onSelectDatabase }: GenProps) {
 
         // SELECT block. (if fields doesn't selected use *).
         const cols = selection.selectedCols.length > 0
-            ? selection.selectedCols.map(c => c.columnName).join(", ")
+            ? selection.selectedCols.map(c => {
+                return c.aggregate ? `${c.aggregate}(${c.columnName})` : c.columnName;
+            }).join(", ")
             : "*";
 
         let sql = `SELECT ${cols}\nFROM ${selection.selectedTable.tableName}`;
@@ -325,60 +328,79 @@ function SfGenerator({ metadata, onPreview, onSelectDatabase }: GenProps) {
             <div className="sf-generator">
                 <span className="sf-keyword">SELECT</span>
                 {/* already selected */}
-                {selection.selectedCols?.map((col) => (
-                    <select
-                        key={colKey(col)}
-                        value={formatSelectColumnItem(col)}
-                        onChange={(e) => {
-                            const newValue = e.target.value;
+                {selection.selectedCols?.map((col, index) => (
+                    <div key={colKey(col)} className="sf-agg-item">
+                        <select
+                            className="sf-agg-select"
+                            value={col.aggregate || ""}
+                            onChange={(e) => {
+                                const newAgg = e.target.value;
+                                const newCols = [...selection.selectedCols];
+                                newCols[index] = { ...col, aggregate: newAgg };
+                                setSelection((prev) => ({ ...prev, selectedCols: newCols }));
+                            }}
+                        >
+                            <option value="">none</option>
+                            <option value="COUNT">COUNT</option>
+                            <option value="SUM">SUM</option>
+                            <option value="AVG">AVG</option>
+                            <option value="MIN">MIN</option>
+                            <option value="MAX">MAX</option>
+                        </select>
+                        <select
+                            key={colKey(col)}
+                            value={formatSelectColumnItem(col)}
+                            onChange={(e) => {
+                                const newValue = e.target.value;
 
-                            // (1) Empty variant = delete.
-                            if (newValue === "") {
-                                const newSelection = selection.selectedCols.filter(
-                                    (c) =>
-                                        formatSelectColumnItem(c) !== formatSelectColumnItem(col)
-                                )
+                                // (1) Empty variant = delete.
+                                if (newValue === "") {
+                                    const newSelection = selection.selectedCols.filter(
+                                        (c) =>
+                                            formatSelectColumnItem(c) !== formatSelectColumnItem(col)
+                                    )
+                                    setSelection((prev) => ({
+                                        ...prev,
+                                        selectedCols: newSelection
+                                    }));
+
+                                    return;
+                                }
+
+                                // (2) Repeat choose - ignore.
+                                if (newValue === formatSelectColumnItem(col)) {
+                                    return;
+                                }
+
+                                // (3) Otherwise: find chosen.
+                                const newCol = selection.availableCols.find(
+                                    (c) => formatSelectColumnItem(c) === newValue
+                                );
+                                if (!newCol) return;
+
+                                // (4) Replace old with new.
+                                const newSelection = selection.selectedCols.map((c) =>
+                                    formatSelectColumnItem(c) === formatSelectColumnItem(col)
+                                        ? newCol
+                                        : c
+                                );
                                 setSelection((prev) => ({
                                     ...prev,
                                     selectedCols: newSelection
                                 }));
-
-                                return;
-                            }
-
-                            // (2) Repeat choose - ignore.
-                            if (newValue === formatSelectColumnItem(col)) {
-                                return;
-                            }
-
-                            // (3) Otherwise: find chosen.
-                            const newCol = selection.availableCols.find(
-                                (c) => formatSelectColumnItem(c) === newValue
-                            );
-                            if (!newCol) return;
-
-                            // (4) Replace old with new.
-                            const newSelection = selection.selectedCols.map((c) =>
-                                formatSelectColumnItem(c) === formatSelectColumnItem(col)
-                                    ? newCol
-                                    : c
-                            );
-                            setSelection((prev) => ({
-                                ...prev,
-                                selectedCols: newSelection
-                            }));
-                        }}
-                    >
-                        <option value="">- unselect -</option>
-                        {selection.availableCols.map((availableCol) => (
-                            <option
-                                key={colKey(availableCol)}
-                                value={formatSelectColumnItem(availableCol)}
-                            >
-                                {formatSelectColumnItem(availableCol)}
-                            </option>
-                        ))}
-                    </select>
+                            }}
+                        >
+                            <option value="">- unselect -</option>
+                            {selection.availableCols.map((availableCol) => (
+                                <option
+                                    key={colKey(availableCol)}
+                                    value={formatSelectColumnItem(availableCol)}
+                                >
+                                    {formatSelectColumnItem(availableCol)}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 ))}
                 {/* new column? if some columns available*/}
                 {/** TODO: some HACK here. need to fix? */}
