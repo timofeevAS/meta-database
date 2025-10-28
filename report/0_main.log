@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.5.3)  1 OCT 2025 22:12
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.5.3)  29 OCT 2025 00:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1599,7 +1599,7 @@ File: listings.cfg 2023/02/27 1.9 listings configuration
 ))
 Package: listings 2023/02/27 1.9 (Carsten Heinz)
 
-Package csquotes Warning: Load 'inputenc' before 'csquotes' on input line 192.
+Package csquotes Warning: Load 'inputenc' before 'csquotes' on input line 195.
 
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
@@ -1625,31 +1625,31 @@ Package babel Info: The following font families will use the default
 )
 \openout1 = `0_main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 192.
-LaTeX Font Info:    ... okay on input line 192.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 192.
-LaTeX Font Info:    ... okay on input line 192.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 192.
-LaTeX Font Info:    ... okay on input line 192.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 192.
-LaTeX Font Info:    ... okay on input line 192.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 192.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 195.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
-92.
+95.
  (C:\Users\atimo\AppData\Local\Programs\MiKTeX\tex/latex/base\ts1cmr.fd
 File: ts1cmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 192.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 192.
-LaTeX Font Info:    ... okay on input line 192.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 192.
-LaTeX Font Info:    ... okay on input line 192.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 192.
-LaTeX Font Info:    ... okay on input line 192.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 192.
-LaTeX Font Info:    ... okay on input line 192.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 192.
-LaTeX Font Info:    ... okay on input line 192.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 195.
+LaTeX Font Info:    ... okay on input line 195.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -1685,71 +1685,71 @@ LaTeX Font Info:    ... okay on input line 192.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \th on input line 192.
+LaTeX Info: Redefining \th on input line 195.
 
 Package fontspec Info: Adjusting the maths setup (use [no-math] to avoid
 (fontspec)             this).
 
 \symlegacymaths=\mathgroup6
 LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
-(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 192.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 192.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 192.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 192.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 192.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 192.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 192.
-LaTeX Font Info:    Redeclaring math accent \check on input line 192.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 192.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 192.
-LaTeX Font Info:    Redeclaring math accent \mathring on input line 192.
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 192.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 192.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 192.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 192.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 192.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 192.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 192.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 192.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 192.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 192.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 192.
-LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 192.
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 192.
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 195.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 195.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 195.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 195.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 195.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 195.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 195.
+LaTeX Font Info:    Redeclaring math accent \check on input line 195.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 195.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 195.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 195.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 195.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 195.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 195.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 195.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 195.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 195.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 195.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 195.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 195.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 195.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 195.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 195.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 195.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 192.
+(Font)              `operators' in the math version `normal' on input line 195.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> TU/TimesNewRoman(0)/m/n on input line 1
-92.
+95.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 192.
+(Font)              `operators' in the math version `bold' on input line 195.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/cmr/bx/n --> TU/TimesNewRoman(0)/m/n on input line 
-192.
+195.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  TU/TimesNewRoman(0)/m/n --> TU/TimesNewRoman(0)/m/n on 
-input line 192.
+input line 195.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
 (Font)                  OT1/cmr/m/it --> TU/TimesNewRoman(0)/m/it on input line
- 192.
+ 195.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
 (Font)                  OT1/cmr/bx/n --> TU/TimesNewRoman(0)/b/n on input line 
-192.
+195.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 192.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 195.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 192.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 195.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  TU/TimesNewRoman(0)/m/n --> TU/TimesNewRoman(0)/b/n on 
-input line 192.
+input line 195.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/cmr/bx/it --> TU/TimesNewRoman(0)/b/it on input lin
-e 192.
+e 195.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 192.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 195.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 192.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 195.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
@@ -1757,7 +1757,7 @@ Package caption Info: listings package is loaded.
 Package caption Info: longtable package is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package newfloat Info: `float' package detected.
-Package hyperref Info: Link coloring ON on input line 192.
+Package hyperref Info: Link coloring ON on input line 195.
 (0_main.out) (0_main.out)
 \@outlinefile=\write7
 \openout7 = `0_main.out'.
@@ -1811,10 +1811,10 @@ Package biblatex Info: Data encoding 'utf8' specified.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file '0_main.bbl' found.
  (0_main.bbl)
-Package biblatex Info: Reference section=0 on input line 192.
-Package biblatex Info: Reference segment=0 on input line 192.
+Package biblatex Info: Reference section=0 on input line 195.
+Package biblatex Info: Reference segment=0 on input line 195.
 
-Package chemgreek Info: Activating mapping `fontspec' on line 192.
+Package chemgreek Info: Activating mapping `fontspec' on line 195.
 
 
 (C:\Users\atimo\AppData\Local\Programs\MiKTeX\tex/latex/pdflscape\pdflscape.sty
@@ -1850,7 +1850,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ])
 
-LaTeX Warning: Empty bibliography on input line 202.
+LaTeX Warning: Empty bibliography on input line 205.
 
 (appendixa.tex [5
 
@@ -1873,7 +1873,7 @@ See the caption package documentation for explanation.
 \tf@toc=\write8
 \openout8 = `0_main.toc'.
 
-runsystem(latexminted cleantemp  --timestamp 20251001221239 90941D0C8AF37115109
+runsystem(latexminted cleantemp  --timestamp 20251029002311 90941D0C8AF37115109
 C04D4911BC8F6)...disabled (restricted).
 
  (0_main.aux)
@@ -1886,7 +1886,7 @@ L3 programming layer <2020/03/25>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `0_main.out' has not changed.
-(rerunfilecheck)             Checksum: A92D0E17CA29E391179206D5BC6A07F3;372.
+(rerunfilecheck)             Checksum: 30BA8BA84536FDB7F2A5214C7C1A5668;444.
 
 Package biblatex Warning: Please (re)run Biber on the file:
 (biblatex)                0_main
@@ -1897,11 +1897,11 @@ Package logreq Info: Writing requests to '0_main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 38009 strings out of 409617
- 755308 string characters out of 5774014
- 2028969 words of memory out of 5000000
- 59615 multiletter control sequences out of 15000+600000
- 561501 words of font info for 69 fonts, out of 8000000 for 9000
+ 38023 strings out of 409617
+ 755648 string characters out of 5774014
+ 2029061 words of memory out of 5000000
+ 59627 multiletter control sequences out of 15000+600000
+ 561517 words of font info for 71 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  94i,11n,93p,1153b,3882s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
