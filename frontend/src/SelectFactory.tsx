@@ -125,12 +125,7 @@ const initialSelectionState: SelectionState = {
 function SfGenerator({ metadata, onPreview, onSelectDatabase }: GenProps) {
     const [selection, setSelection] = useState<SelectionState>(initialSelectionState)
     const lastSelectionRef = useRef<SelectionState | null>(null);
-
-    function resetSelection() {
-        setSelection(initialSelectionState);
-    }
-
-
+    
     const colKey = (c: GenColumn) => `${c.databaseName}::${c.columnName}`;
     const tableKey = (c: GenTable) => `${c.databaseName}::${c.tableName}`;
 
