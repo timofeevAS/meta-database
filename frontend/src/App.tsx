@@ -4,12 +4,16 @@ import { SelectFactory } from './SelectFactory'
 import { QueryHistory } from './QueryHistory'
 
 import type { DatabaseMetadataInfo, TableInfo, SavedQuery } from './types'
+import { QueryResultModal } from './QueryResultModal'
 
 export default function App() {
   const [databases, setDatabases] = useState<string[]>([])
   const [error, setError] = useState<string | null>(null)
   const [metadata, setMetadata] = useState<DatabaseMetadataInfo[]>([])
   const [queryHistory, setQueryHistory] = useState<SavedQuery[]>([])
+  const [queryData, setQueryData] = useState(null)
+  const [modalOpen, setModalOpen] = useState(false);
+
 
   useEffect(() => {
     // Simple example: fetch from FastAPI /api
@@ -68,11 +72,22 @@ export default function App() {
       .catch((e) => setError(String(e)));
   }
 
+  function showQueryResult(result:any) {
+    setModalOpen(true);
+    setQueryData(result)
+  }
+
   return (
     <div>
       <ManagerDB />
-      {metadata.length > 0 && <SelectFactory metadata={metadata} onUpdateHistory={fetchQueryList} />}
-      {queryHistory.length > 0 && <QueryHistory history={queryHistory} onUpdateHistory={fetchQueryList} />}
+      {metadata.length > 0 && <SelectFactory metadata={metadata} onUpdateHistory={fetchQueryList} onShowQuery={showQueryResult} />}
+      {queryHistory.length > 0 && <QueryHistory history={queryHistory} onUpdateHistory={fetchQueryList} onShowQuery={showQueryResult}/>}
+
+      <QueryResultModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        data={queryData}
+      />
     </div>
   )
 }

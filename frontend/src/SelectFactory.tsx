@@ -4,7 +4,7 @@ import "./SelectFactory.css";
 import type { DatabaseMetadataInfo, SelectFactoryProps } from './types';
 import { executeQuery } from "./services/metadataApi";
 
-export function SelectFactory({metadata, onUpdateHistory}: SelectFactoryProps) {
+export function SelectFactory({metadata, onUpdateHistory, onShowQuery}: SelectFactoryProps) {
     /* TODO: add real setSqlQuery */
     const [sqlQuery, setSqlQuery] = useState("");
     const [databaseName, setDatabaseName] = useState(""); // TODO: Using this database name in future to complete sql query.
@@ -17,6 +17,7 @@ export function SelectFactory({metadata, onUpdateHistory}: SelectFactoryProps) {
         try {
             setLoading(true);
             const data = await executeQuery(databaseName, sqlQuery);
+            onShowQuery(data);
             setResult(JSON.stringify(data, null, 2));
         } catch (err) {
             console.error("Error executing query:", err);
@@ -125,7 +126,7 @@ const initialSelectionState: SelectionState = {
 function SfGenerator({ metadata, onPreview, onSelectDatabase }: GenProps) {
     const [selection, setSelection] = useState<SelectionState>(initialSelectionState)
     const lastSelectionRef = useRef<SelectionState | null>(null);
-    
+
     const colKey = (c: GenColumn) => `${c.databaseName}::${c.columnName}`;
     const tableKey = (c: GenTable) => `${c.databaseName}::${c.tableName}`;
 

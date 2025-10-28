@@ -2,13 +2,13 @@ import "./QueryHistory.css";
 import type { QueryHistoryProps } from './types';
 import { executeQuery } from "./services/metadataApi";
 
-export function QueryHistory({ history, onUpdateHistory}: QueryHistoryProps) {
+export function QueryHistory({ history, onUpdateHistory, onShowQuery}: QueryHistoryProps) {
     console.log("Loaded history:", history);
 
     async function handleExecute(databaseName: string, sqlQuery: string) {
         try {
             const data = await executeQuery(databaseName, sqlQuery);
-            alert(JSON.stringify(data, null, 2));
+            onShowQuery(data);
         } catch (err) {
             console.error("Error executing query:", err);
             alert("❌ Error executing query: " + (err instanceof Error ? err.message : String(err)));
