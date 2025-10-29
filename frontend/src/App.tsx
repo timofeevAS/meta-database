@@ -81,7 +81,7 @@ export default function App() {
     <div>
       <ManagerDB />
       {metadata.length > 0 && <SelectFactory metadata={metadata} onUpdateHistory={fetchQueryList} onShowQuery={showQueryResult} />}
-      {queryHistory.length > 0 && <QueryHistory history={queryHistory} onUpdateHistory={fetchQueryList} onShowQuery={showQueryResult}/>}
+      {queryHistory.length > 0 && metadata.length > 0 && <QueryHistory history={queryHistory} onUpdateHistory={fetchQueryList} onShowQuery={showQueryResult}/>}
 
       <QueryResultModal
         isOpen={modalOpen}
