@@ -176,10 +176,27 @@ isbn=false,                                         % Не показывать 
 
 \usepackage{pdfpages}
 \usepackage[utf8]{inputenc}
-\usepackage{minted}
+\usepackage{fancyvrb}
 \usepackage{colortbl} % Для использования \colorbox
 \usepackage{xcolor}   % Для определения цвета
 \usepackage{listings}
+\usepackage{xcolor}
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{codeframe}{RGB}{220,220,220}
+\usepackage{fontspec}
+\setmonofont{Consolas}
+\lstset{
+	backgroundcolor=\color{codebg},
+	frame=single,
+	rulecolor=\color{codeframe},
+	basicstyle=\ttfamily\small,
+	numbers=left,
+	numberstyle=\tiny\color{gray},
+	breaklines=true,
+	tabsize=4,
+	captionpos=b
+}
+
 
 \newcommand{\tinycode}[1]{{\tiny\texttt{#1}}}
 \newcommand{\smallcode}[1]{{\small\texttt{#1}}}
