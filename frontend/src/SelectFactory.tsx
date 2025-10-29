@@ -96,7 +96,7 @@ type SelectionState = {
 };
 
 function formatSelectColumnItem(genColumn: GenColumn): string {
-    return `${genColumn.columnName} (${genColumn.databaseName})`
+    return `${genColumn.columnName} [${genColumn.tableName}] (${genColumn.databaseName})`
 }
 
 function formatSelectTableItem(genColumn: GenTable): string {
