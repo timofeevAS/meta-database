@@ -6,6 +6,8 @@ import { QueryHistory } from './QueryHistory'
 import type { DatabaseMetadataInfo, TableInfo, SavedQuery } from './types'
 import { QueryResultModal } from './QueryResultModal'
 
+import './App.css'
+
 export default function App() {
   const [databases, setDatabases] = useState<string[]>([])
   const [error, setError] = useState<string | null>(null)
@@ -88,6 +90,12 @@ export default function App() {
         onClose={() => setModalOpen(false)}
         data={queryData}
       />
+
+      {(queryHistory.length === 0 || metadata.length === 0) && <Spinner/>}
     </div>
   )
+}
+
+function Spinner() {
+  return <div className="spinner"></div>;
 }
