@@ -98,12 +98,12 @@ def _ensure_primary_key_columns(cur, primary_key_id: int, pkeys: List[PrimaryKey
 
     return ensured
 
-def _ensure_foreign_keys(cur, table_id: int, fkeys: List[ForeignKeyInfo]) -> List[ForeignKey]:
+def _ensure_foreign_keys(cur, table_id: int, fkeys: List[ForeignKeyInfo], db_id: int) -> List[ForeignKey]:
     ensured: List[ForeignKey] = []
     for fkey in fkeys:
         cur.execute("""--sql
-            SELECT id FROM tables WHERE name = %s
-        """, (fkey["referenced_table"],))
+            SELECT id FROM tables WHERE name = %s AND database_id = %s;
+        """, (fkey["referenced_table"], db_id,))
 
         rows = cur.fetchall()[0]
         ref_table_id: int = rows[0]
@@ -187,7 +187,7 @@ def fill_metadata_from_dsn(dsn: str) -> None:
                 # TODO make foreign keys
                 for table in tables:
                     # TODO: should add database_id?
-                    fkeys = _ensure_foreign_keys(cur, table.id, extractor.list_foreign_keys("public", table.name))
+                    fkeys = _ensure_foreign_keys(cur, table.id, extractor.list_foreign_keys("public", table.name), database.id)
                     
                     
 def save_query(database_name: str, sql_query: str):
