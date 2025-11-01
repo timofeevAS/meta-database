@@ -1,7 +1,5 @@
 \babel@toc {russian}{}\relax 
 \contentsline {chapter}{Постановка задачи}{4}{chapter*.2}%
 \contentsline {chapter}{\chapternumberline {1}Описание заданного окружения}{5}{chapter.1}%
-\contentsline {subsection}{\numberline {1.0.1}Общая схема сетевого взаимодействия сущностей}{5}{subsection.1.0.1}%
-\contentsline {subsection}{\numberline {1.0.2}Развертывание и установка соединения с БД}{6}{subsection.1.0.2}%
-\contentsline {chapter}{Заключение}{7}{chapter*.4}%
-\contentsline {chapter}{Приложение А}{8}{chapter*.5}%
+\contentsline {chapter}{Заключение}{8}{chapter*.8}%
+\contentsline {chapter}{Приложение А}{9}{chapter*.9}%

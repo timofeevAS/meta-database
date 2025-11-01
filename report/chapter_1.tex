@@ -15,10 +15,10 @@
 	\label{fig:general-schema}
 \end{figure}
 
-В рамках данной работы соединение с удаленным сервером с развернутыми СУБД выполнено через \texttt{SSH}-туннель.
+В рамках данной работы соединение с удаленным сервером с развернутыми СУБД выполнено через \smallcode{SSH}-туннель.
 
 \subsection*{Развертывание и установка соединения с БД}
-Для развертывания \texttt{Docker}-контейнеров были использованы \texttt{Docker-compose} скрипты представленные в \hyperref[lst:listing1]{Листинге \ref*{lst:listing1}}
+Для развертывания \smallcode{Docker}-контейнеров были использованы \smallcode{Docker-compose} скрипты представленные в \hyperref[lst:listing1]{Листинге \ref*{lst:listing1}}
 
 \lstset{basicstyle=\ttfamily\small}
 \begin{lstlisting}[language=bash, caption={docker-compose.yml файл для создания контейнера с СУБД	}, label={lst:listing1}]
@@ -36,7 +36,7 @@ volumes:
 	metadata_db_data:
 \end{lstlisting}
 
-Параметр \texttt{VPS-PORT} задается в файле переменных окружения \texttt{.env}, пример файла представлен в  \hyperref[lst:listing2]{Листинге \ref*{lst:listing2}}
+Параметр \smallcode{VPS-PORT} задается в файле переменных окружения \smallcode{.env}, пример файла представлен в  \hyperref[lst:listing2]{Листинге \ref*{lst:listing2}}
 
 \begin{lstlisting}[language=bash, caption={.env файл для создания контейнера с СУБД}, label={lst:listing2}]
 POSTGRES_DB=app
@@ -44,12 +44,34 @@ POSTGRES_USER=appuser
 POSTGRES_PASSWORD=ChangeMe_12345
 VPS_PORT=10001
 \end{lstlisting}
-В \texttt{.env} файле дополнительно настраиваются переменные окружения для подключения к базе данных: \texttt{POSTGRES\_DB}, \texttt{POSTGRES\_USER}, \texttt{POSTGRES\_PASSWORD}.
+В \smallcode{.env} файле дополнительно настраиваются переменные окружения для подключения к базе данных: \smallcode{POSTGRES\_DB}, \smallcode{POSTGRES\_USER}, \smallcode{POSTGRES\_PASSWORD}.
 
-Для подключения к базе данных используется \texttt{DSN} (\texttt{Data soruce name}) по следующему шаблону:
+Для подключения к базе данных используется \smallcode{DSN} (\smallcode{Data soruce name}) по следующему шаблону:
 
 
-\texttt{postgresql://[user[:password]@][host][:port]/[database\_name]}.
+\smallcode{postgresql://[user[:password]@][host][:port]/[database\_name]}.
 
-Для установки соединения необходимо настройку \texttt{SSH}-туннеля для портов, соответствующих контейнеров на удаленном сервере.
+Для установки соединения необходимо настройку \smallcode{SSH}-туннеля для портов, соответствующих контейнеров на удаленном сервере.
+
+\subsection*{Описание взаимодействия внутренних компонент}
+В рамках курсовой работы были выделены следующие основные компоненты:
+\begin{enumerate}
+	\item \smallcode{Metadata Manager} - приложение (\smallcode{web}-сервер).
+	\item \smallcode{Metadata Database} - СУБД Postgresql с базой данных для хранения метаданных.
+	\item Функциональные компоненты взаимодействия с СУБД:
+		\begin{itemize}
+			\item \smallcode{Metadata Extractor Service} - извлечение метаданных из базы данных;
+			\item \smallcode{Metadata Writer Service} - запись в texttt{Metadata Database};
+			\item \smallcode{Metadata Reader Service} - чтение из texttt{Metadata Database};
+		\end{itemize}
+	\item \smallcode{Web-UI} - пользовательский графический веб-интерфейс.
+\end{enumerate}
+
+На \hyperref[fig:app-schema]{Рисунке \ref*{fig:app-schema}} представлена схема взаимодействия взаимодействия основных компонент приложения. 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.9\linewidth]{app-schema.drawio.pdf}
+	\caption{Схема взаимодействия основных компонент приложения}
+	\label{fig:app-schema}
+\end{figure}
 
