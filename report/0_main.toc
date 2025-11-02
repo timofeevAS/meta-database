@@ -1,5 +1,22 @@
 \babel@toc {russian}{}\relax 
 \contentsline {chapter}{Постановка задачи}{4}{chapter*.2}%
 \contentsline {chapter}{\chapternumberline {1}Описание заданного окружения}{5}{chapter.1}%
-\contentsline {chapter}{Заключение}{8}{chapter*.8}%
-\contentsline {chapter}{Приложение А}{9}{chapter*.9}%
+\contentsline {chapter}{\chapternumberline {2}Хранилище метаданных}{9}{chapter.2}%
+\babel@toc {russian}{}\relax 
+\babel@toc {russian}{}\relax 
+\contentsline {section}{\numberline {2.1}Схема базы данных}{9}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Запросы к \texttt {information schema}}{11}{section.2.2}%
+\babel@toc {english}{}\relax 
+\babel@toc {russian}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {russian}{}\relax 
+\contentsline {section}{\numberline {2.3}Использование построенных запросов}{14}{section.2.3}%
+\contentsline {chapter}{Заключение}{16}{chapter*.15}%
+\contentsline {chapter}{Список использованных источников}{17}{section*.17}%
+\babel@toc {russian}{}\relax 
+\babel@toc {russian}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {russian}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {russian}{}\relax 
+\contentsline {chapter}{Приложение А}{18}{chapter*.18}%

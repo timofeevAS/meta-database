@@ -143,7 +143,7 @@ doi=false,                                          % Не отображать 
 isbn=false,                                         % Не показывать ISBN, ISSN, ISRN
 ]{biblatex}
 \DeclareDelimFormat{bibinitdelim}{}                 % Убираем пробел между инициалами (Иванов И.И. вместо Иванов И. И.)
-\addbibresource{biba.bib}                           % Определяем файл с библиографией
+\addbibresource{biba.bib}        
 
 %%% Скрипт, который автоматически подбирает язык (и, следовательно, формат) для каждой библиографической записи %%%
 %%% Если в названии работы есть кириллица - меняем значение поля langid на russian %%%
@@ -175,6 +175,8 @@ isbn=false,                                         % Не показывать 
 \usepackage{amsfonts}                                % Усовершенствование отображения математических выражений 
 
 \usepackage{pdfpages}
+\usepackage{rotating}   % для \begin{turn}
+\usepackage[absolute,overlay]{textpos}
 \usepackage[utf8]{inputenc}
 \usepackage{fancyvrb}
 \usepackage{colortbl} % Для использования \colorbox
@@ -219,13 +221,9 @@ isbn=false,                                         % Не показывать 
 	\tableofcontents*                                   % Автособираемое оглавлени
 	\input{introduction}
 	\input{chapter_1}
+	\input{chapter_2}
 	\input{conclusion}
 	\printbibliography[title=Список использованных источников] % Автособираемый список литературы
 	\input{appendixa}
-	
-	
-
-	
-	
 	
 \end{document}

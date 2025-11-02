@@ -1,9 +1,15 @@
 [0] Config.pm:307> INFO - This is Biber 2.19
 [0] Config.pm:310> INFO - Logfile is '0_main.blg'
-[129] biber-MSWIN64:340> INFO - === 
-[213] Biber.pm:419> INFO - Reading '0_main.bcf'
-[330] Biber.pm:979> INFO - Found 2 citekeys in bib section 0
-[369] Biber.pm:4419> INFO - Processing section 0
-[379] Biber.pm:4610> INFO - Looking for bibtex file 'biba.bib' for section 0
-[608] Utils.pm:410> ERROR - Cannot find 'biba.bib'!
-[609] Biber.pm:136> INFO - ERRORS: 1
+[91] biber-MSWIN64:340> INFO - === 
+[179] Biber.pm:419> INFO - Reading '0_main.bcf'
+[289] Biber.pm:979> INFO - Found 3 citekeys in bib section 0
+[310] Biber.pm:4419> INFO - Processing section 0
+[322] Biber.pm:4610> INFO - Looking for bibtex file 'biba.bib' for section 0
+[392] bibtex.pm:1713> INFO - LaTeX decoding ...
+[408] bibtex.pm:1519> INFO - Found BibTeX data source 'biba.bib'
+[451] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[452] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[452] Biber.pm:4239> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'ru-RU'
+[453] Biber.pm:4245> INFO - No sort tailoring available for locale 'ru-RU'
+[461] bbl.pm:660> INFO - Writing '0_main.bbl' with encoding 'UTF-8'
+[465] bbl.pm:763> INFO - Output to 0_main.bbl

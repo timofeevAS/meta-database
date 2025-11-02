@@ -3,7 +3,7 @@
 В текущей работы рассматриваются три схемы и три СУБД расположенных удаленном сервере в отдельных \smallcode{Docker}-контейнерах:
 \begin{itemize}
 	\item База данных метаданных;
-	\item База данных (margo?);
+	\item База данных по баскетболу;
 	\item База данных по игре Dota 2;
 \end{itemize}
 
@@ -70,8 +70,16 @@ VPS_PORT=10001
 На \hyperref[fig:app-schema]{Рисунке \ref*{fig:app-schema}} представлена схема взаимодействия взаимодействия основных компонент приложения. 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=.9\linewidth]{app-schema.drawio.pdf}
+	\includegraphics[width=1\linewidth]{app-schema.drawio.pdf}
 	\caption{Схема взаимодействия основных компонент приложения}
 	\label{fig:app-schema}
 \end{figure}
 
+Для реализации приложения использованы следующие языки программирования и технологии:
+\begin{itemize}
+	\item \smallcode{Python 3.12};
+	\item \smallcode{TypeScript};
+	\item \smallcode{React}
+	\item \smallcode{FastApi, uvicorn web server};
+	\item \smallcode{PostgreSQL};
+\end{itemize}

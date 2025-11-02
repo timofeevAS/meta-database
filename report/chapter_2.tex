@@ -1,0 +1,220 @@
+\chapter{Хранилище метаданных}
+Метаданные - информация о другой информации, или данные, относящиеся к дополнительной информации о содержимом или объекте. Метаданные раскрывают сведения о признаках и свойствах, характеризующих какие-либо сущности, позволяющие автоматически искать и управлять ими в больших информационных потоках. \cite{sheymovich2022}
+
+\section{Схема базы данных}
+Для реляционной базы данных, рассматриваемой в курсовой работе, выбран следующий набор метаданных, характеризующих базу данных:
+\begin{enumerate}[]
+	\item Имя базы данных.
+	\item Секреты для подключения к базе данных:
+		\begin{itemize}[]
+			\item сетевой адрес;
+			\item порт;
+			\item имя пользователя;
+			\item пароль;
+		\end{itemize}
+	\item Набор таблиц.
+	\item Набор колонок.
+	\item Набор первичных ключей.
+	\item Набор внешних ключей.
+\end{enumerate}
+
+
+Данный набор сущностей позволяет реализовать генератор подмонжества \smallcode{SELECT}-запросов.
+
+На \hyperref[fig:schema-image]{Рисунке \ref*{fig:schema-image}} представлена реляционная схема базы данных метаданных, хранящая вышеописанные сущности.\\
+
+
+\smallcode{SQL}-скрипт создания представленной схемы приведен в  \hyperref[lst:sqlinit]{Приложении А}.
+
+\newpage
+\includepdf[
+scale=.89,
+pages=-,
+pagecommand={%
+	\thispagestyle{empty}% или empty, если без номера страницы
+	\addtocounter{figure}{1}%
+	\refstepcounter{figure}%
+	\vspace*{15cm}%
+	\hspace{22.5cm}
+	\begin{turn}{90}%
+		\centering
+		{Рисунок~\thefigure\ --- Рассмотрение заявки на турнир}\label{fig:schema-image}%
+	\end{turn}%
+	\begin{textblock*}{5cm}(275mm,13cm) % (x, y) в cm от верхнего левого угла страницы
+		\begin{turn}{90}
+			\thepage
+		\end{turn}
+	\end{textblock*}
+},
+nup=1x1,
+landscape=true,
+fitpaper=true,
+templatesize={420mm}{297mm},
+offset=0mm 10mm
+]{schema-image.jpg}
+\addtocounter{page}{0}
+\newpage
+
+\section{Запросы к \texttt{information schema}}
+Каждая созданная в СУБД \smallcode{PostgreSQL} база данных содержит отдельную информационную схему, называющуюся \smallcode{inforamtion schmmea}. Данная схема содержит таблицы, колонки и связи созданные пользователем. \cite{postgresql-schemas}
+
+\subsection*{Получение списка таблиц}
+Представление \smallcode{information\_schema.tables} содержит в себе таблицы в текущей базе данных. При обращении к ней есть только те таблицы, которые доступны текущему пользователю. \cite{postgresql-tables}
+
+
+В \hyperref[lst:sql1]{Листинге \ref*{lst:sql1}} приведен пример выполнения запроса к \smallcode{information schema} для получения имен таблиц.
+\lstset{basicstyle=\ttfamily\small}
+\begin{lstlisting}[language=bash, caption={Пример выполнения запроса для получения списка таблиц}, label={lst:sql1}]
+SELECT 
+table_name
+FROM information_schema.tables
+WHERE table_schema = 'public' AND table_type='BASE TABLE'
+ORDER BY table_name;
+
+     table_name
+---------------------
+columns
+credentials
+databases
+foreign_key_columns
+foreign_keys
+primary_key_columns
+primary_keys
+saved_queries
+tables
+\end{lstlisting}
+
+\subsection*{Получение списка колонок}
+Представление \smallcode{information\_schema.columns} содержит в себе колонки в текущей базе данных. При обращении к ней есть только те таблицы, которые доступны текущему пользователю.
+
+
+В \hyperref[lst:sql2]{Листинге \ref*{lst:sql2}} приведен пример выполнения запроса к \smallcode{information schema} для получения имен колонок, типов данных и порядка колонки.
+\lstset{basicstyle=\ttfamily\small}
+\begin{lstlisting}[language=bash, caption={Пример выполнения запроса для получения списка колонок для таблицы credentials}, label={lst:sql2}]
+SELECT
+ordinal_position,
+column_name,
+data_type
+FROM information_schema.columns
+WHERE table_schema = 'public'
+AND table_name = 'credentials'
+ORDER BY ordinal_position;
+
+ ordinal_position | column_name |     data_type
+------------------+-------------+-------------------
+				1 | id          | integer
+				2 | database_id | integer
+				3 | host_ipv4   | character varying
+				4 | port        | integer
+				5 | username    | character varying
+				6 | password    | character varying
+\end{lstlisting}
+
+\subsection*{Получение списка первичных ключей}
+Представление \smallcode{information\_schema.table\_constraints} содержит в себе необходимую информацию о первичных и внешних ключах таблицы. В представлении \smallcode{information\_schema.key\_column\_usage} содержится информация о используемых ключах.
+
+
+В \hyperref[lst:sql3]{Листинге \ref*{lst:sql3}} приведен пример выполнения запроса к \smallcode{information schema} для получения списка первичных ключей для таблицы \smallcode{databases}.
+\lstset{basicstyle=\ttfamily\small}
+\begin{lstlisting}[language=bash, caption={Пример выполнения запроса для получения списка первичных ключей для таблицы databases}, label={lst:sql3}]
+SELECT
+kcu.column_name AS column_name,
+kcu.ordinal_position AS position_in_pk
+FROM information_schema.table_constraints AS tc
+JOIN information_schema.key_column_usage AS kcu`
+ON tc.constraint_name = kcu.constraint_name
+AND tc.table_schema = kcu.table_schema
+WHERE tc.constraint_type = 'PRIMARY KEY'
+AND tc.table_schema = 'public'
+AND tc.table_name = 'databases'
+ORDER BY kcu.ordinal_position;
+	
+ column_name | position_in_pk
+-------------+---------------
+ id          |              1
+\end{lstlisting}
+
+\subsection*{Получение списка внешних ключей}
+В \hyperref[lst:sql4]{Листинге \ref*{lst:sql4}} приведен пример выполнения запроса к \smallcode{information schema} для получения списка внешних ключей для таблицы \smallcode{databases}.
+\lstset{basicstyle=\ttfamily\small}
+\begin{lstlisting}[language=bash, caption={Пример выполнения запроса для получения списка внешних ключей для таблицы credentials}, label={lst:sql4}]
+SELECT
+kcu.table_name            AS src_table,
+kcu.column_name           AS src_column,
+ccu.table_name            AS tgt_table,
+ccu.column_name           AS tgt_column,
+kcu.ordinal_position      AS position
+FROM information_schema.table_constraints AS tc
+JOIN information_schema.key_column_usage AS kcu
+ON tc.constraint_name = kcu.constraint_name
+AND tc.table_schema = kcu.table_schema
+JOIN information_schema.constraint_column_usage AS ccu
+ON ccu.constraint_name = tc.constraint_name
+AND ccu.constraint_schema = tc.table_schema
+WHERE tc.constraint_type = 'FOREIGN KEY'
+AND kcu.table_schema = 'public'
+AND kcu.table_name = 'credentials'
+ORDER BY position;
+  src_table  | src_column  | tgt_table | tgt_column | position
+-------------+-------------+-----------+------------+----------
+credentials  | database_id | databases | id         |        1
+\end{lstlisting}
+
+\section{Использование построенных запросов}
+\subsection*{Чтение метаданных}
+Полученные запросы используются в \smallcode{core/extractor-service} для получения метаданных из внешней базы данных. Для подключения к внешней базе данных используется \smallcode{DSN}-строка, например:
+\smallcode{postgresql://appuser:password123@31.124.33.3:5432/databasename}. Полученные данные представляются как есть в виде словарей.
+
+
+Реализованный модуль для извлечения метаданных содержит следующие основные методы:
+\begin{itemize}[]
+	\item \smallcode{list\_tables(database)} - получение списка таблиц;
+	\item \smallcode{list\_columns(database, table)} - получение списка колонок;
+	\item \smallcode{list\_primary\_keys(database, table, column)} - получение списка первичных ключей;
+	\item \smallcode{list\_foreign\_keys(database, table, column)} - получение списка внешних ключей;
+\end{itemize}
+
+В \hyperref[lst:sql-example-extractor]{Листинге \ref*{lst:sql-example-extractor}} приведен пример "псевдовызова" метода и результат вызова.
+
+\begin{lstlisting}[language=bash, caption={Пример выполнения запроса из core/extractor-service}, label={lst:sql-example-extractor}]
+> extractor('postgresql://appuser:password123@31.124.33.3:5432/databasename')
+     .list_columns('users')
+>
+ [
+     {'name': 'id', 'data_type': 'integer'},
+	 {'name': 'name', 'data_type': 'text'},
+	 {'name': 'age', 'data_type': 'integer'},
+	 {'name': 'is_active', 'data_type': 'boolean'}
+ ]
+\end{lstlisting}
+
+\subsection*{Запись метаданных}
+Модуль \smallcode{core/writer-service} используются для записи метаданных из внешней базы данных в локальную базу данных метаданных. Входные данные ожидаются как есть в виде словарей.
+
+
+Реализованный модуль для извлечения метаданных содержит следующие основные методы:
+\begin{itemize}[]
+	\item \smallcode{ensure\_database(database\_name)} - запись информации о базе данных;
+	\item \smallcode{ensure\_credentials(database\_name, dsn)} - запись секретов о базе данных;
+	\item \smallcode{ensure\_tables(database, tables)} - запись таблиц;
+	\item \smallcode{ensure\_columns(database, table, columns)} - запись колонок;
+	\item \smallcode{ensure\_primary\_keys(database, table, pkeys)} - запись первичных ключей;
+	\item \smallcode{ensure\_foreign\_keys(database, table, fkeys)} - запись внешних ключей;
+\end{itemize}
+
+\subsection*{Чтение метаданных}
+Модуль \smallcode{core/reader-service} используются для чтения метаданных из локальной базы данных метаданных. Выходные данные ожидаются представление "один ко дному" данных на уровне программы.
+
+
+Реализованный модуль для чтения метаданных содержит следующие основные методы:
+\begin{itemize}[]
+	\item \smallcode{list\_database(database\_name)} - чтение информации о базе данных;
+	\item \smallcode{list\_credentials(database\_name)} - чтение секретов о базе данных;
+	\item \smallcode{list\_tables(database, tables)} - чтение таблиц;
+	\item \smallcode{list\_columns(database, table)} - чтение колонок;
+	\item \smallcode{list\_primary\_keys(database, table)} - чтение первичных ключей;
+	\item \smallcode{list\_foreign\_keys(database, table)} - чтение внешних ключей;
+\end{itemize}
+
+
+Таким образом, реализованные модули чётко разделяют зоны ответственности, а их взаимодействие через определённые контракты обеспечивает соблюдение уровней абстракции внутри приложения Manager Metadata.
