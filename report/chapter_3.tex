@@ -1,0 +1,117 @@
+\chapter{Пользовательский интерфейс}
+В курсовой работе реализован графический пользовательский веб-интерфейс, доступный например через веб-браузер.
+
+Для программной реализации был использован язык программирования: \smallcode{TypeScript} и библиотека \smallcode{React}. Для сборки \smallcode{js-bundle} использовалась утилита \smallcode{eslint}.
+
+\section{Генерация \smallcode{SELECT}-запросов}
+Генерация \smallcode{SELECT}-запросов выполняется на уровне клиента (пользователя). Для данной работы выбрано следующее подмножество \smallcode{SELECT}-запросов:
+\begin{enumerate}
+	\item Выбор одной или нескольких колонок.
+	\item Агрегатные функции для колонок.
+	\item Единственное условие \smallcode{WHERE} (опционально).
+\end{enumerate}
+Также для генератора запроса выдвинуты дополнительные требования:
+\begin{itemize}
+	\item наполнение данных в форме при генерация если выбрать таблицу или колонку синхронизируется.
+	\item сгенерированные запросы сохраняются в приложении.
+\end{itemize}
+
+\subsection*{Сохранение \smallcode{SELECT}-запросов}
+Для реализации сохранения сгенерированных \smallcode{SELECT}-запросов была введена дополнительная таблица в базу данных метаданных \smallcode{history}. При выполнении запроса всегда фиксируем историю всех запросов в базе данных для воспроизведения их в дальнейшем.
+
+На \hyperref[fig:schema-image2]{Рисунке \ref*{fig:schema-image2}} представлена обновленная реляционная схема базы данных метаданных, хранящая историю запросов.\\
+
+\newpage
+\includepdf[
+scale=.89,
+pages=-,
+pagecommand={%
+	\thispagestyle{empty}% или empty, если без номера страницы
+	\addtocounter{figure}{1}%
+	\refstepcounter{figure}%
+	\vspace*{15cm}%
+	\hspace{22.5cm}
+	\begin{turn}{90}%
+		\centering
+		{Рисунок~\thefigure\ --- Схема базы данных с учетом таблицы \smallcode{history}}\label{fig:schema-image2}%
+	\end{turn}%
+	\begin{textblock*}{5cm}(275mm,13cm) % (x, y) в cm от верхнего левого угла страницы
+		\begin{turn}{90}
+			\thepage
+		\end{turn}
+	\end{textblock*}
+},
+nup=1x1,
+landscape=true,
+fitpaper=true,
+templatesize={420mm}{297mm},
+offset=0mm 10mm
+]{schema-image2.jpg}
+\addtocounter{page}{0}
+\newpage
+С точки зрения абстракции не совсем правильно хранить в базе данных метаданных запросы, однако для более удобной разработки в курсовой работе данные сущности располагаются рядом.
+
+\section{Особенности пользовательского интерфейса}
+
+В пользовательском интерфейсе определены следующие основные части:
+\begin{enumerate}
+	\item Список подключенных баз данных.
+	\item Форма добавления новой базы данных по \smallcode{DSN}.
+	\item Генератор \smallcode{SELECT}-запроса.
+	\item История сгенерированных \smallcode{SELECT}-запросов.
+	\item Модальная форма результата \smallcode{SELECT}-запроса.
+\end{enumerate}
+
+\subsection*{Список подключенных баз данных}
+На \hyperref[fig:ui1]{Рисунке \ref*{fig:ui1}} представлен внешний вид компонентов пользовательского интерфейса: 
+\begin{itemize}[]
+	\item список подключенных баз данных;
+	\item форма добавления новой базы данных;
+\end{itemize}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.6\linewidth]{ui1.jpg}
+	\caption{Список подключений и форма создания нового подключения}
+	\label{fig:ui1}
+\end{figure}
+\newpage
+\subsection*{Генератор \smallcode{SELECT}-запроса}
+На \hyperref[fig:ui2]{Рисунке \ref*{fig:ui2}} представлен внешний вид генератора \smallcode{SELECT}-запроса.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.8\linewidth]{ui2.jpg}
+	\caption{Генератор \smallcode{SELECT}-запроса}
+	\label{fig:ui2}
+\end{figure}
+
+В генераторе запроса пользователю доступен выбор:
+\begin{itemize}[]
+	\item одной или нескольких колонок;
+	\item опциональные агрегатные функции (\smallcode{COUNT, SUM, MIN, MAX, AVG});
+	\item опциональные условия \smallcode{WHERE};
+\end{itemize}
+
+
+Наполнение select-box'ов зависит от выбранных колонок или таблицы и синхронизируется в зависимости выбора пользователя.
+
+\subsection*{История сгенерированных \smallcode{SELECT}-запросов}
+На \hyperref[fig:ui3]{Рисунке \ref*{fig:ui3}} представлен внешний вид истории сгенерированных \smallcode{SELECT}-запросов.
+\newpage
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{ui3.jpg}
+	\caption{История \smallcode{SELECT}-запросов}
+	\label{fig:ui3}
+\end{figure}
+
+\subsection*{Модальное окно результата \smallcode{SELECT}-запроса}
+На \hyperref[fig:ui4]{Рисунке \ref*{fig:ui4}} представлен внешний вид модального окна выполненного \smallcode{SELECT}-запроса.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.7\linewidth]{ui4.jpg}
+	\caption{Результат \smallcode{SELECT}-запроса}
+	\label{fig:ui4}
+\end{figure}
+
+Пользовательский интерфейс позволяет выполнять генерацию \smallcode{SELECT}-запросов и их выполнение для добавленных баз данных. За счет разделения сущностей пользовательский интерфейс обращается через \smallcode{API} к \smallcode{Metadata Manager} веб-серверу и не выполняет напрямую манипуляции с внешними базами данных.
+

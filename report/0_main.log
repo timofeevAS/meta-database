@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.5.3)  2 NOV 2025 16:47
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.5.3)  2 NOV 2025 17:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1886,7 +1886,7 @@ File: schema-image.jpg Graphic file (type bmp)
 File: schema-image.jpg Graphic file (type bmp)
 <schema-image.jpg>
 
-Overfull \hbox (221.5215pt too wide) in paragraph at lines 54--54
+Overfull \hbox (221.78868pt too wide) in paragraph at lines 54--54
 []  [] 
  []
 
@@ -1936,17 +1936,59 @@ Underfull \hbox (badness 10000) in paragraph at lines 202--203
 sNewRoman(0)/m/n/14.4 - запись внешних
  []
 
-) (conclusion.tex [15]) [16
+) (chapter_3.tex [15]
+Underfull \hbox (badness 1484) in paragraph at lines 7--9
+\TU/TimesNewRoman(0)/m/n/14.4 вателя). Для данной работы выбрано следующее подм
+ножество \TU/Consolas(0)/m/n/12 SELECT\TU/TimesNewRoman(0)/m/n/14.4 -
+ []
 
-] (appendixa.tex [17
+
+Underfull \hbox (badness 10000) in paragraph at lines 22--23
+
+ []
+
+[16
+
+]
+File: schema-image2.jpg Graphic file (type bmp)
+<schema-image2.jpg>
+File: schema-image2.jpg Graphic file (type bmp)
+<schema-image2.jpg>
+
+Overfull \hbox (221.78868pt too wide) in paragraph at lines 49--49
+[]  [] 
+ []
+
+File: schema-image2.jpg Graphic file (type bmp)
+<schema-image2.jpg>
+[17
+
+]
+Overfull \vbox (76.95544pt too high) has occurred while \output is active []
+
+
+[18]
+File: ui1.jpg Graphic file (type bmp)
+<ui1.jpg>
+ [19]
+File: ui2.jpg Graphic file (type bmp)
+<ui2.jpg>
+ [20]
+File: ui3.jpg Graphic file (type bmp)
+<ui3.jpg>
+File: ui4.jpg Graphic file (type bmp)
+<ui4.jpg>
+ [21]) (conclusion.tex [22]) [23
+
+] (appendixa.tex [24
 
 ]
 (C:\Users\atimo\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 )
-[18
+[25
 
-] [19])
+] [26])
 
 Package caption Warning: Unused \captionsetup[subfigure] on input line 88.
 See the caption package documentation for explanation.
@@ -1955,7 +1997,7 @@ See the caption package documentation for explanation.
 Package caption Warning: Unused \captionsetup[table] on input line 89.
 See the caption package documentation for explanation.
 
-[20]
+[27]
 \tf@toc=\write8
 \openout8 = `0_main.toc'.
 
@@ -1965,18 +2007,18 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2020/03/25>
  ***********
 Package rerunfilecheck Info: File `0_main.out' has not changed.
-(rerunfilecheck)             Checksum: C024E351DFC515A7CF981148EA6C060E;1960.
+(rerunfilecheck)             Checksum: 0508F37882CEA5516769C70D96FA7852;2821.
 Package logreq Info: Writing requests to '0_main.run.xml'.
 \openout1 = `0_main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 35860 strings out of 409617
- 677676 string characters out of 5774014
+ 35922 strings out of 409617
+ 678633 string characters out of 5774014
  2137191 words of memory out of 5000000
- 57436 multiletter control sequences out of 15000+600000
- 561886 words of font info for 97 fonts, out of 8000000 for 9000
+ 57488 multiletter control sequences out of 15000+600000
+ 561894 words of font info for 98 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  94i,15n,101p,1153b,7420s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on 0_main.pdf (19 pages).
+Output written on 0_main.pdf (26 pages).

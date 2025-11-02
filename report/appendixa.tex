@@ -97,9 +97,9 @@ password VARCHAR(255) NOT NULL
 );
 
 -- =========================================
--- SAVED QUERIES
+-- SAVED QUERIES (history)
 -- =========================================
-CREATE TABLE saved_queries (
+CREATE TABLE history (
 id SERIAL PRIMARY KEY,
 database_id INTEGER NOT NULL REFERENCES databases(id) ON DELETE CASCADE,
 sql_query TEXT NOT NULL,
