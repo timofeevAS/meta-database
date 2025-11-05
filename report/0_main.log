@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.5.3)  2 NOV 2025 18:05
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.5.3)  5 NOV 2025 20:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1886,7 +1886,7 @@ File: schema-image.jpg Graphic file (type bmp)
 File: schema-image.jpg Graphic file (type bmp)
 <schema-image.jpg>
 
-Overfull \hbox (221.78868pt too wide) in paragraph at lines 54--54
+Overfull \hbox (221.78868pt too wide) in paragraph at lines 53--53
 []  [] 
  []
 
@@ -1894,44 +1894,44 @@ File: schema-image.jpg Graphic file (type bmp)
 <schema-image.jpg>
 [10
 
-] [11] [12]
-Underfull \hbox (badness 10000) in paragraph at lines 165--167
+] [11] [12] [13]
+Underfull \hbox (badness 10000) in paragraph at lines 164--166
 []\TU/TimesNewRoman(0)/m/n/14.4 Полученные запросы используются в \TU/Consolas(
 0)/m/n/12 core/extractor-service
  []
 
 
-Underfull \hbox (badness 6961) in paragraph at lines 165--167
+Underfull \hbox (badness 6961) in paragraph at lines 164--166
 \TU/TimesNewRoman(0)/m/n/14.4 для получения метаданных из внешней базы данных. 
 Для подклю-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 165--167
+Underfull \hbox (badness 10000) in paragraph at lines 164--166
 \TU/TimesNewRoman(0)/m/n/14.4 чения к внешней базе данных используется \TU/Cons
 olas(0)/m/n/12 DSN\TU/TimesNewRoman(0)/m/n/14.4 -строка, например:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 165--167
+Underfull \hbox (badness 10000) in paragraph at lines 164--166
 \TU/Consolas(0)/m/n/12 postgresql://appuser:password123@31.124.33.3:5432/databa
 sename\TU/TimesNewRoman(0)/m/n/14.4 . Полу-
  []
 
-[13]
-Underfull \hbox (badness 5787) in paragraph at lines 173--174
+
+Underfull \hbox (badness 5787) in paragraph at lines 172--173
 []\TU/Consolas(0)/m/n/12 list_-primary_-keys(database, table, column) \TU/Times
 NewRoman(0)/m/n/14.4 - получение списка
  []
 
 
-Underfull \hbox (badness 5787) in paragraph at lines 174--175
+Underfull \hbox (badness 5787) in paragraph at lines 173--174
 []\TU/Consolas(0)/m/n/12 list_-foreign_-keys(database, table, column) \TU/Times
 NewRoman(0)/m/n/14.4 - получение списка
  []
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 202--203
+Underfull \hbox (badness 10000) in paragraph at lines 201--202
 []\TU/Consolas(0)/m/n/12 ensure_-foreign_-keys(database, table, fkeys) \TU/Time
 sNewRoman(0)/m/n/14.4 - запись внешних
  []
@@ -1964,31 +1964,27 @@ File: schema-image2.jpg Graphic file (type bmp)
 [17
 
 ]
-Overfull \vbox (76.95544pt too high) has occurred while \output is active []
-
-
-[18]
 File: ui1.jpg Graphic file (type bmp)
 <ui1.jpg>
- [19]
+ [18]
 File: ui2.jpg Graphic file (type bmp)
 <ui2.jpg>
- [20]
+ [19]
 File: ui3.jpg Graphic file (type bmp)
 <ui3.jpg>
 File: ui4.jpg Graphic file (type bmp)
 <ui4.jpg>
- [21]) (conclusion.tex [22]) [23
+ [20]) (conclusion.tex [21]) [22
 
-] (appendixa.tex [24
+] (appendixa.tex [23
 
 ]
 (C:\Users\atimo\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 )
-[25
+[24
 
-] [26])
+] [25])
 
 Package caption Warning: Unused \captionsetup[subfigure] on input line 88.
 See the caption package documentation for explanation.
@@ -1997,7 +1993,7 @@ See the caption package documentation for explanation.
 Package caption Warning: Unused \captionsetup[table] on input line 89.
 See the caption package documentation for explanation.
 
-[27]
+[26]
 \tf@toc=\write8
 \openout8 = `0_main.toc'.
 
@@ -2013,12 +2009,12 @@ Package logreq Info: Writing requests to '0_main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 35920 strings out of 409617
- 678567 string characters out of 5774014
+ 35918 strings out of 409617
+ 678537 string characters out of 5774014
  2137191 words of memory out of 5000000
- 57487 multiletter control sequences out of 15000+600000
+ 57485 multiletter control sequences out of 15000+600000
  561886 words of font info for 97 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  94i,15n,101p,1153b,7420s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on 0_main.pdf (26 pages).
+Output written on 0_main.pdf (25 pages).
