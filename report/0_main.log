@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.5.3)  9 NOV 2025 18:39
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.5.3)  9 NOV 2025 19:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1837,7 +1837,15 @@ Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
 
 (1_title.tex) [1
 
-] (0_main.toc
+] (abstract.tex
+Underfull \hbox (badness 1888) in paragraph at lines 29--30
+[]\TU/TimesNewRoman(0)/m/n/14.4 KEYWORDS: Metadata, databases, PostgreSQL, MSDB
+, client-server
+ []
+
+[3
+
+] [4]) (0_main.toc
 LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
 
 (C:\Users\atimo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
@@ -1848,25 +1856,25 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
 (C:\Users\atimo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ))
-(introduction.tex [3]
+(introduction.tex [5]
 Underfull \hbox (badness 1867) in paragraph at lines 9--10
 []\TU/TimesNewRoman(0)/m/n/14.4 Целью данной курсовой работы является разработк
 а приложения,
  []
 
-[4
+[6
 
-]) (chapter_1.tex [5
+]) (chapter_1.tex [7
 
 ]
 File: functional-schema.drawio.pdf Graphic file (type pdf)
 <use functional-schema.drawio.pdf>
- [6
+ [8
 
 ]
 File: app-schema.drawio.pdf Graphic file (type pdf)
 <use app-schema.drawio.pdf>
- [7]
+ [9]
 File: docker-general-schema.drawio.pdf Graphic file (type pdf)
 <use docker-general-schema.drawio.pdf>
 
@@ -1884,12 +1892,12 @@ File: lstlang1.sty 2023/02/27 1.9 listings language file
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
 nput line 56.
 
-[8]) (chapter_2.tex [9]
+[10]) (chapter_2.tex [11]
 Underfull \hbox (badness 10000) in paragraph at lines 24--25
 
  []
 
-[10
+[12
 
 ]
 File: schema-image.jpg Graphic file (type bmp)
@@ -1903,9 +1911,9 @@ Overfull \hbox (221.78868pt too wide) in paragraph at lines 53--53
 
 File: schema-image.jpg Graphic file (type bmp)
 <schema-image.jpg>
-[11
+[13
 
-] [12] [13] [14]
+] [14] [15] [16]
 Underfull \hbox (badness 10000) in paragraph at lines 164--166
 []\TU/TimesNewRoman(0)/m/n/14.4 Полученные запросы используются в \TU/Consolas(
 0)/m/n/12 core/extractor-service
@@ -1941,13 +1949,37 @@ Underfull \hbox (badness 5787) in paragraph at lines 173--174
 NewRoman(0)/m/n/14.4 - получение списка
  []
 
-[15]
+[17]
 Underfull \hbox (badness 10000) in paragraph at lines 201--202
 []\TU/Consolas(0)/m/n/12 ensure_-foreign_-keys(database, table, fkeys) \TU/Time
 sNewRoman(0)/m/n/14.4 - запись внешних
  []
 
-) (chapter_3.tex [16]
+
+Underfull \hbox (badness 10000) in paragraph at lines 222--223
+
+ []
+
+[18]
+File: tables_basketball.png Graphic file (type bmp)
+<tables_basketball.png>
+ [19]
+File: schema-basketball.pdf Graphic file (type pdf)
+<use schema-basketball.pdf>
+File: schema-basketball.pdf Graphic file (type pdf)
+<use schema-basketball.pdf, page 1>
+File: schema-basketball.pdf Graphic file (type pdf)
+<use schema-basketball.pdf, page 1>
+
+Overfull \hbox (193.33592pt too wide) in paragraph at lines 272--272
+[]  [] 
+ []
+
+File: schema-basketball.pdf Graphic file (type pdf)
+<use schema-basketball.pdf, page 1>
+[20
+
+]) (chapter_3.tex
 Underfull \hbox (badness 1484) in paragraph at lines 7--9
 \TU/TimesNewRoman(0)/m/n/14.4 вателя). Для данной работы выбрано следующее подм
 ножество \TU/Consolas(0)/m/n/12 SELECT\TU/TimesNewRoman(0)/m/n/14.4 -
@@ -1958,7 +1990,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 22--23
 
  []
 
-[17
+[21
 
 ]
 File: schema-image2.jpg Graphic file (type bmp)
@@ -1972,30 +2004,30 @@ Overfull \hbox (221.78868pt too wide) in paragraph at lines 49--49
 
 File: schema-image2.jpg Graphic file (type bmp)
 <schema-image2.jpg>
-[18
+[22
 
 ]
 File: ui1.jpg Graphic file (type bmp)
 <ui1.jpg>
- [19]
+ [23]
 File: ui2.jpg Graphic file (type bmp)
 <ui2.jpg>
- [20]
+ [24]
 File: ui3.jpg Graphic file (type bmp)
 <ui3.jpg>
 File: ui4.jpg Graphic file (type bmp)
 <ui4.jpg>
- [21]) (conclusion.tex [22]) [23
+ [25]) (conclusion.tex [26]) [27
 
-] (appendixa.tex [24
+] (appendixa.tex [28
 
 ]
 (C:\Users\atimo\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 )
-[25
+[29
 
-] [26])
+] [30])
 
 Package caption Warning: Unused \captionsetup[subfigure] on input line 88.
 See the caption package documentation for explanation.
@@ -2004,7 +2036,7 @@ See the caption package documentation for explanation.
 Package caption Warning: Unused \captionsetup[table] on input line 89.
 See the caption package documentation for explanation.
 
-[27]
+[31]
 \tf@toc=\write8
 \openout8 = `0_main.toc'.
 
@@ -2014,18 +2046,18 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2020/03/25>
  ***********
 Package rerunfilecheck Info: File `0_main.out' has not changed.
-(rerunfilecheck)             Checksum: D1B4C00C123A97EB8264F94FE1871BE8;2906.
+(rerunfilecheck)             Checksum: 5ACD97C9EBE430EF96FF917441C58E09;3145.
 Package logreq Info: Writing requests to '0_main.run.xml'.
 \openout1 = `0_main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 35928 strings out of 409617
- 678876 string characters out of 5774014
+ 35961 strings out of 409617
+ 679674 string characters out of 5774014
  2136191 words of memory out of 5000000
- 57494 multiletter control sequences out of 15000+600000
+ 57521 multiletter control sequences out of 15000+600000
  561886 words of font info for 97 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 94i,15n,101p,1153b,7420s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 94i,18n,101p,1153b,7420s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on 0_main.pdf (26 pages).
+Output written on 0_main.pdf (30 pages).
