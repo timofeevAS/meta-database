@@ -1,5 +1,37 @@
-\chapter{Описание заданного окружения}
-\subsection*{Общая схема сетевого взаимодействия сущностей}
+\chapter{Проектирование приложения}
+\subsection*{Функциональная схема взаимодействия компонент}
+На \hyperref[fig:functional-schema]{Рисунке \ref*{fig:functional-schema}} представлена функциональная схема взаимодействия объектов.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{functional-schema.drawio.pdf}
+	\caption{Схема функционального взаимодействия компонент}
+	\label{fig:functional-schema}
+\end{figure}
+
+\subsection*{Описание взаимодействия внутренних компонент}
+В рамках курсовой работы были выделены следующие основные компоненты:
+\begin{enumerate}
+	\item \smallcode{Metadata Manager} - приложение (\smallcode{web}-сервер).
+	\item \smallcode{Metadata Database} - СУБД Postgresql с базой данных для хранения метаданных.
+	\item Функциональные компоненты взаимодействия с СУБД:
+	\begin{itemize}
+		\item \smallcode{Metadata Extractor Service} - извлечение метаданных из базы данных;
+		\item \smallcode{Metadata Writer Service} - запись в texttt{Metadata Database};
+		\item \smallcode{Metadata Reader Service} - чтение из texttt{Metadata Database};
+		\item \smallcode{Meta-select executor service} - выполнение запросов к базам данных;
+	\end{itemize}
+	\item \smallcode{Web-UI} - пользовательский графический веб-интерфейс.
+\end{enumerate}
+
+На \hyperref[fig:app-schema]{Рисунке \ref*{fig:app-schema}} представлена схема взаимодействия взаимодействия основных компонент приложения. 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{app-schema.drawio.pdf}
+	\caption{Схема взаимодействия основных компонент приложения}
+	\label{fig:app-schema}
+\end{figure}
+
+\subsection*{Прикладная схема сетевого взаимодействия}
 В текущей работы рассматриваются три схемы и три СУБД расположенных удаленном сервере в отдельных \smallcode{Docker}-контейнерах:
 \begin{itemize}
 	\item База данных метаданных;
@@ -53,37 +85,6 @@ VPS_PORT=10001
 
 Для установки соединения необходимо настройку \smallcode{SSH}-туннеля для портов, соответствующих контейнеров на удаленном сервере.
 
-\subsection*{Функциональная схема взаимодействия компонент}
-На \hyperref[fig:functional-schema]{Рисунке \ref*{fig:functional-schema}} представлена функциональная схема взаимодействия объектов.
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=1\linewidth]{functional-schema.drawio.pdf}
-	\caption{Схема функционального взаимодействия компонент}
-	\label{fig:functional-schema}
-\end{figure}
-
-\subsection*{Описание взаимодействия внутренних компонент}
-В рамках курсовой работы были выделены следующие основные компоненты:
-\begin{enumerate}
-	\item \smallcode{Metadata Manager} - приложение (\smallcode{web}-сервер).
-	\item \smallcode{Metadata Database} - СУБД Postgresql с базой данных для хранения метаданных.
-	\item Функциональные компоненты взаимодействия с СУБД:
-		\begin{itemize}
-			\item \smallcode{Metadata Extractor Service} - извлечение метаданных из базы данных;
-			\item \smallcode{Metadata Writer Service} - запись в texttt{Metadata Database};
-			\item \smallcode{Metadata Reader Service} - чтение из texttt{Metadata Database};
-			\item \smallcode{Meta-select executor service} - выполнение запросов к базам данных;
-		\end{itemize}
-	\item \smallcode{Web-UI} - пользовательский графический веб-интерфейс.
-\end{enumerate}
-
-На \hyperref[fig:app-schema]{Рисунке \ref*{fig:app-schema}} представлена схема взаимодействия взаимодействия основных компонент приложения. 
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=1\linewidth]{app-schema.drawio.pdf}
-	\caption{Схема взаимодействия основных компонент приложения}
-	\label{fig:app-schema}
-\end{figure}
 
 Для реализации приложения использованы следующие языки программирования и технологии:
 \begin{itemize}
